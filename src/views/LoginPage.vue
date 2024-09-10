@@ -84,7 +84,8 @@ export default {
   width: 100%;
 }
 .form {
-  min-width: 310px;
+  min-width: 300px;
+  width: 50%;
 }
 .logo {
   display: block;
@@ -92,5 +93,11 @@ export default {
   aspect-ratio: 1/1;
   margin: 0 auto 20px;
   align-items: center;
+}
+:deep(.el-input__wrapper) {
+  background-color: silver;
+}
+:deep(.el-input__inner) {
+  color: black;
 }
 </style>
