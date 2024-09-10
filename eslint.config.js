@@ -1,13 +1,31 @@
-import pluginVue from 'eslint-plugin-vue'
+import globals from 'globals';
+import vue from 'eslint-plugin-vue';
+import prettier from 'eslint-config-prettier';
+import prettierPlugin from 'eslint-plugin-prettier';
+
 export default [
-    // add more generic rulesets here, such as:
-    // js.configs.recommended,
-    ...pluginVue.configs['flat/recommended'],
-    // ...pluginVue.configs['flat/vue2-recommended'], // Use this if you are using Vue.js 2.x.
-    {
-        rules: {
-            // override/add rules settings here, such as:
-            // 'vue/no-unused-vars': 'error'
-        }
-    }
-]
+  {
+    files: ['**/*.{js,mjs,cjs,vue}'],
+    languageOptions: {
+      parserOptions: {
+        ecmaVersion: 2021,
+        sourceType: 'module',
+      },
+      globals: globals.browser,
+    },
+    plugins: {
+      vue,
+      prettier: prettierPlugin,
+    },
+    rules: {
+      'prettier/prettier': 'error',
+      'vue/no-multiple-template-root': 'off',
+      'no-console': 'warn',
+      'no-debugger': 'warn',
+      // Добавь свои правила или переопредели существующие здесь
+    },
+    settings: {
+      prettier,
+    },
+  },
+];
