@@ -7,7 +7,7 @@
       label-width="auto"
       class="form"
     >
-      <img src="../assets/vue.svg" alt="Logo" class="logo" />
+      <img src="../../assets/vue.svg" alt="Logo" class="logo" />
       <el-form-item label="Почта" prop="mail">
         <el-input v-model="form.mail" />
       </el-form-item>
@@ -18,6 +18,7 @@
         <el-button class="btn-submit" type="primary" @click="validate">
           Войти
         </el-button>
+        <router-link :to="{ path: '/login' }">Главная</router-link>
       </el-form-item>
     </el-form>
   </div>
@@ -85,7 +86,7 @@ export default {
 }
 .form {
   min-width: 300px;
-  width: 50%;
+  width: 40%;
 }
 .logo {
   display: block;

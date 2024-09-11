@@ -1,3 +1,4 @@
+// Используем watchEffect для динамического обновления ElementPlus при изменении размера
 import { createApp, reactive } from 'vue';
 import { createPinia } from 'pinia';
 import { router } from './router/index.js';
@@ -36,10 +37,3 @@ const app = createApp(App)
   .use(ElementPlus, { size: state.size });
 
 app.mount('#app');
-
-// Используем watchEffect для динамического обновления ElementPlus при изменении размера
-import { watchEffect } from 'vue';
-
-watchEffect(() => {
-  app.use(ElementPlus, { size: state.size });
-});
