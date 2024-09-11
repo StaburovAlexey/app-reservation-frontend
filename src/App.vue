@@ -5,6 +5,7 @@
 <script>
 export default {
   setup() {
+    document.body.classList.add('white');
     return {};
   },
 };

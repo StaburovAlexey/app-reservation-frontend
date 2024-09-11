@@ -1,6 +1,9 @@
-:root {
-  --color-open-side-bar: rgb(237, 237, 237);
-}
+@import url('./assets/themeDark.css');
+@import url('./assets/themeWhite.css');
 body {
+  width: 100%;
   font-family: 'Gill Sans', sans-serif;
+}
+.el-icon {
+  color: var(--el-color-icon-base);
 }

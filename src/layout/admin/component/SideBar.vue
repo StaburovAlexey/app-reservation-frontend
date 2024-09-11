@@ -2,7 +2,7 @@
   <el-menu
     default-active="2"
     class="side-bar"
-    :collapse="isCollapse"
+    :collapse="openSidebar"
     @open="handleOpen"
     @close="handleClose"
   >
@@ -25,7 +25,6 @@
       </el-sub-menu>
     </el-sub-menu>
     <el-menu-item index="2">
-      <el-icon><icon-menu /></el-icon>
       <template #title>Navigator Two</template>
     </el-menu-item>
     <el-menu-item index="3" disabled>
@@ -39,21 +38,39 @@
   </el-menu>
 </template>
 
-<script>
-export default {
-  setup() {
-    return {};
-  },
-};
+<script setup>
+import { toRefs } from 'vue';
+
+// Определяем props
+const props = defineProps({
+  openSidebar: Boolean, // Ожидаем, что openSidebar будет булевым значением
+});
+// Приводим openSidebar к реактивности
+const { openSidebar } = toRefs(props);
+// Определяем методы handleOpen и handleClose
+function handleOpen() {
+  console.log('Sidebar opened');
+}
+
+function handleClose() {
+  console.log('Sidebar closed');
+}
 </script>
 
 <style scoped>
-.side-bar {
-  width: 20%;
-  min-width: 200px;
-  height: calc(100vh - 60px);
+.side-bar:not(.el-menu--collapse) {
+  width: 250px;
+  height: calc(100vh - 50px);
+  position: relative;
+  z-index: 20;
+  
 }
+.el-menu--collapse {
+  position: relative;
+  z-index: 20;
+
+}
+
 :deep(.el-menu--inline) {
-  background-color: var(--el-color-primary-light-9);
 }
 </style>
