@@ -31,6 +31,7 @@ export default {
   height: calc(100% - 50px);
   position: relative;
   padding-top: 50px;
+  background-color: var(--el-backgroud-color-base);
   display: flex;
   flex-direction: row;
   overflow: hidden;

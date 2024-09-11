@@ -63,12 +63,11 @@ function handleClose() {
   height: calc(100vh - 50px);
   position: relative;
   z-index: 20;
-  
+  box-shadow: var(--el-box-shadow-light-right);
 }
 .el-menu--collapse {
   position: relative;
   z-index: 20;
-
 }
 
 :deep(.el-menu--inline) {

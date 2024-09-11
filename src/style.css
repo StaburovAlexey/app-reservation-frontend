@@ -7,3 +7,6 @@ body {
 .el-icon {
   color: var(--el-color-icon-base);
 }
+.el-menu {
+  border-right: 0;
+}

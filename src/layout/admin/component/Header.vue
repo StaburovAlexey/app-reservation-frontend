@@ -44,8 +44,9 @@ function toggleThemeColor() {
   width: 100%;
   height: 50px;
   background-color: var(--el-backgroud-color-base);
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.88);
+  box-shadow: var(--el-box-shadow-light);
   padding-left: 260px;
+  padding-right: 10px;
   position: absolute;
   top: 0;
   left: 0;
@@ -54,11 +55,10 @@ function toggleThemeColor() {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  transition: padding 0.5s ease;
+  transition: padding 0.3s linear;
 }
 .header-collapse {
   padding-left: 73px;
-  transition: padding 0.5s ease;
 }
 .icon-burger {
   cursor: pointer;
