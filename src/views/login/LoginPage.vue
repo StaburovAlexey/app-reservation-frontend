@@ -32,6 +32,7 @@
 
 <script>
 import { reactive, ref } from 'vue';
+import { createUser, getUsers } from '@/db/index.js';
 export default {
   setup() {
     const form = reactive({
@@ -55,9 +56,13 @@ export default {
         },
       ],
     });
-
-    const submitForm = async (formEl) => {
-      console.log(formEl);
+    const submitForm = async (form) => {
+      try {
+        const user = await createUser(form.mail, form.password);
+        console.log('User created:', user);
+      } catch (error) {
+        console.error('Error creating user:', error);
+      }
     };
     const validate = async () => {
       formRef.value.validate((valid) => {

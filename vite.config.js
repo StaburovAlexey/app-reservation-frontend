@@ -8,6 +8,11 @@ import vue from '@vitejs/plugin-vue';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  server: {
+    proxy: {
+      '/api': 'http://localhost:5000', // Прокси для запросов к Node.js серверу
+    },
+  },
   plugins: [
     vue(),
     AutoImport({
