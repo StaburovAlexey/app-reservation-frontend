@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-container">
+  <div class="layout-container__admin">
     <Header @clickBurger="openSidebar = !openSidebar"></Header>
     <SideBar :openSidebar></SideBar>
     <Main :openSidebar></Main>
@@ -8,9 +8,9 @@
 
 <script>
 import { reactive, ref } from 'vue';
-import Header from '@/layout/admin/component/Header.vue';
-import SideBar from './component/SideBar.vue';
-import Main from '@/layout/admin/component/Main.vue';
+import Header from '@/layout/component/Header.vue';
+import SideBar from '@/layout/component/SideBar.vue';
+import Main from '@/layout/component/Main.vue';
 export default {
   components: {
     Header,
@@ -26,7 +26,7 @@ export default {
 </script>
 
 <style scoped>
-.layout-container {
+.layout-container__admin {
   width: 100%;
   height: calc(100% - 50px);
   position: relative;

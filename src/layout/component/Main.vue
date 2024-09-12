@@ -1,7 +1,7 @@
 <template>
-  <div
-    :class="['app-conteiner', { 'app-conteiner-collapse': openSidebar }]"
-  ></div>
+  <div :class="['app-conteiner', { 'app-conteiner-collapse': openSidebar }]">
+    <RouterView></RouterView>
+  </div>
 </template>
 
 <script setup>
@@ -18,10 +18,12 @@ const { openSidebar } = toRefs(props);
 <style scoped>
 .app-conteiner {
   height: calc(100vh - 50px);
+  width: 100%;
   box-sizing: border-box;
-  background-color: black;
+  background-color: var(--el-backgroud-color-base);
+  display: flex;
+  padding: 20px;
 }
 .app-conteiner-collapse {
-
 }
 </style>

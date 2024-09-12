@@ -68,6 +68,7 @@ function handleClose() {
 .el-menu--collapse {
   position: relative;
   z-index: 20;
+  box-shadow: var(--el-box-shadow-light-right);
 }
 
 :deep(.el-menu--inline) {

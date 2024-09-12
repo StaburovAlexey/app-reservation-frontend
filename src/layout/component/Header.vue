@@ -1,6 +1,19 @@
 <template>
-  <div :class="['header', { 'header-collapse': isCollapsed }]">
-    <el-icon class="icon-burger" size="25" @click="clickBurger">
+  <div
+    :class="[
+      collapseEnabled ? 'header' : 'header-no-collapse',
+      { 'header-collapse': isCollapsed },
+    ]"
+  >
+    <el-icon
+      v-if="collapseEnabled"
+      class="icon-burger"
+      size="25"
+      @click="clickBurger"
+    >
+      <Operation />
+    </el-icon>
+    <el-icon v-if="!collapseEnabled" class="icon-burger" size="25" @click="">
       <Operation />
     </el-icon>
     <el-icon class="icon-burger" size="25" @click="toggleThemeColor">
@@ -11,11 +24,21 @@
 </template>
 
 <script setup>
-import { ref, defineEmits, computed } from 'vue';
+import { ref, defineEmits, defineProps, computed } from 'vue';
 // Создаем реактивное свойство для отслеживания состояния
 const isCollapsed = ref(false);
 const isWhiteTheme = ref(true);
-
+// Определите пропсы с помощью defineProps
+const props = defineProps({
+  collapseEnabled: {
+    type: Boolean,
+    default: true,
+  },
+  count: {
+    type: Number,
+    default: 0,
+  },
+});
 // Определяем emit для отправки события
 const emit = defineEmits(['clickBurger']);
 
@@ -46,6 +69,24 @@ function toggleThemeColor() {
   background-color: var(--el-backgroud-color-base);
   box-shadow: var(--el-box-shadow-light);
   padding-left: 260px;
+  padding-right: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  transition: padding 0.3s linear;
+}
+.header-no-collapse {
+  box-sizing: border-box;
+  width: 100%;
+  height: 50px;
+  background-color: var(--el-backgroud-color-base);
+  box-shadow: var(--el-box-shadow-light);
+  padding-left: 10px;
   padding-right: 10px;
   position: absolute;
   top: 0;

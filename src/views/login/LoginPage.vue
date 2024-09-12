@@ -18,7 +18,13 @@
         <el-button class="btn-submit" type="primary" @click="validate">
           Войти
         </el-button>
-        <router-link :to="{ path: '/login' }">Главная</router-link>
+        <router-link
+          :to="{
+            path: $route.path == '/admin/login' ? '/login' : '/admin/login',
+          }"
+        >
+          Главная
+        </router-link>
       </el-form-item>
     </el-form>
   </div>
@@ -73,7 +79,7 @@ export default {
 <style lang="css" scoped>
 .container-login {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background-color: rgb(5, 1, 20);
   display: flex;
   align-items: center;

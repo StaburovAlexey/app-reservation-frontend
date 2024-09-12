@@ -1,8 +1,11 @@
 @import url('./assets/themeDark.css');
 @import url('./assets/themeWhite.css');
 body {
-  width: 100%;
   font-family: 'Gill Sans', sans-serif;
+}
+#app {
+  width: 100%;
+  height: 100vh;
 }
 .el-icon {
   color: var(--el-color-icon-base);
