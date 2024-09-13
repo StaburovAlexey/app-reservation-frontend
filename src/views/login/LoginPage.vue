@@ -18,13 +18,7 @@
         <el-button class="btn-submit" type="primary" @click="validate">
           Войти
         </el-button>
-        <router-link
-          :to="{
-            path: $route.path == '/admin/login' ? '/login' : '/admin/login',
-          }"
-        >
-          Главная
-        </router-link>
+        <router-link to="/admin">Главная</router-link>
       </el-form-item>
     </el-form>
   </div>
@@ -33,8 +27,12 @@
 <script>
 import { reactive, ref } from 'vue';
 import { createUser, getUsers, findUser } from '@/db/index.js';
+import { useRouter } from 'vue-router';
+import { useAuthStore } from '@/stores/authStore.js';
 export default {
   setup() {
+    const authStore = useAuthStore();
+    const router = useRouter();
     const form = reactive({
       mail: '',
       password: '',
@@ -59,6 +57,10 @@ export default {
     const submitForm = async (form) => {
       try {
         const user = await findUser(form);
+        await authStore.checkAuth().then(() => {
+          router.push('/admin/login');
+        });
+
         console.log('User created:', user);
       } catch (error) {
         console.error('Error creating user:', error);

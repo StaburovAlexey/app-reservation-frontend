@@ -36,7 +36,25 @@ api.interceptors.request.use(
     return Promise.reject(error);
   },
 );
+// Функция для проверки валидности токена
+export const isAuthenticated = async () => {
+  const token = localStorage.getItem('token');
+  if (!token) return false;
 
+  try {
+    const response = await api.post(
+      '/validate-token',
+      {},
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      },
+    );
+    console.log('response', response);
+    return response.status === 200; // Возвращаем true, если токен валиден
+  } catch (error) {
+    return false; // Если произошла ошибка, токен считается невалидным
+  }
+};
 // Функция для создания пользователя
 export const createUser = async (userData) => {
   try {
@@ -53,7 +71,8 @@ export const createUser = async (userData) => {
 export const getUsers = async () => {
   try {
     const response = await api.get('/users');
-    return response.data;
+    console.log('res111', response.data);
+    return await response.data;
   } catch (error) {
     throw new Error(
       `Error fetching users: ${error.response ? error.response.data.error : error.message}`,
