@@ -13,7 +13,9 @@
       </template>
       <el-menu-item-group>
         <template #title><span>Group One</span></template>
-        <el-menu-item index="1-1">item one</el-menu-item>
+        <router-link to="/admin/test">
+          <el-menu-item index="1-1">TEST</el-menu-item>
+        </router-link>
         <el-menu-item index="1-2">item two</el-menu-item>
       </el-menu-item-group>
       <el-menu-item-group title="Group Two">
@@ -64,6 +66,7 @@ function handleClose() {
   position: relative;
   z-index: 20;
   box-shadow: var(--el-box-shadow-light-right);
+  flex-shrink: 0;
 }
 .el-menu--collapse {
   position: relative;

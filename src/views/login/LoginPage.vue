@@ -8,8 +8,8 @@
       class="form"
     >
       <img src="../../assets/vue.svg" alt="Logo" class="logo" />
-      <el-form-item label="Почта" prop="mail">
-        <el-input v-model="form.mail" />
+      <el-form-item label="Почта" prop="login">
+        <el-input v-model="form.login" />
       </el-form-item>
       <el-form-item label="Пароль" prop="password">
         <el-input v-model="form.password" type="password" />
@@ -26,20 +26,20 @@
 
 <script>
 import { reactive, ref } from 'vue';
-import { createUser, getUsers, findUser } from '@/db/index.js';
 import { useRouter } from 'vue-router';
-import { useAuthStore } from '@/stores/authStore.js';
+import { registerUser, loginUser, getUsers } from '@/api/index.js';
+import { useUserStore } from '@/stores/userStore.js';
 export default {
   setup() {
-    const authStore = useAuthStore();
     const router = useRouter();
+    const userStore = useUserStore();
     const form = reactive({
-      mail: '',
+      login: '',
       password: '',
     });
     const formRef = ref();
     const rules = reactive({
-      mail: [
+      login: [
         {
           required: true,
           message: 'Введите почту',
@@ -56,14 +56,12 @@ export default {
     });
     const submitForm = async (form) => {
       try {
-        const user = await findUser(form);
-        await authStore.checkAuth().then(() => {
-          router.push('/admin/login');
-        });
-
-        console.log('User created:', user);
+        const response = await loginUser(form.login, form.password);
+        // Логика после успешного логина
+        userStore.setUser(response.user); // Сохранение пользователя и токена в store
+        router.push('/admin');
       } catch (error) {
-        console.error('Error creating user:', error);
+        console.error('Login failed:', error);
       }
     };
     const validate = async () => {

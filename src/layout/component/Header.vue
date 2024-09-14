@@ -13,18 +13,25 @@
     >
       <Operation />
     </el-icon>
-    <el-icon v-if="!collapseEnabled" class="icon-burger" size="25" @click="">
-      <Operation />
-    </el-icon>
-    <el-icon class="icon-burger" size="25" @click="toggleThemeColor">
-      <Sunny v-if="isWhiteTheme" />
-      <Moon v-else />
-    </el-icon>
+    <div class="header__btn-conteiner">
+      <el-icon v-if="!collapseEnabled" class="icon-burger" size="25" @click="">
+        <Operation />
+      </el-icon>
+      <el-icon class="icon-burger" size="25" @click="toggleThemeColor">
+        <Sunny v-if="isWhiteTheme" />
+        <Moon v-else />
+      </el-icon>
+      <el-button round @click="logout">Выйти</el-button>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { ref, defineEmits, defineProps, computed } from 'vue';
+import { useUserStore } from '@/stores/userStore.js';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 // Создаем реактивное свойство для отслеживания состояния
 const isCollapsed = ref(false);
 const isWhiteTheme = ref(true);
@@ -46,6 +53,11 @@ const emit = defineEmits(['clickBurger']);
 function clickBurger() {
   isCollapsed.value = !isCollapsed.value; // Переключение класса
   emit('clickBurger');
+}
+function logout() {
+  const userStore = useUserStore();
+  userStore.logout(); // Очистка пользователя и токена из store
+  router.push('/login'); // Перенаправляем на страницу входа
 }
 
 function toggleThemeColor() {
@@ -103,5 +115,12 @@ function toggleThemeColor() {
 }
 .icon-burger {
   cursor: pointer;
+}
+.header__btn-conteiner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
 }
 </style>

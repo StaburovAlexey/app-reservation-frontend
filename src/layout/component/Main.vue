@@ -18,7 +18,6 @@ const { openSidebar } = toRefs(props);
 <style scoped>
 .app-conteiner {
   height: calc(100vh - 50px);
-  width: 100%;
   box-sizing: border-box;
   background-color: var(--el-backgroud-color-base);
   display: flex;

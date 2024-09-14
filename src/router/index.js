@@ -3,7 +3,31 @@ import {
   createWebHashHistory,
   createRouter,
 } from 'vue-router';
-import { useAuthStore } from '@/stores/authStore';
+import { useUserStore } from '@/stores/userStore.js';
+import { jwtDecode } from 'jwt-decode';
+
+// Проверка авторизации
+const isAuthenticated = (userStore) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    try {
+      // Декодирование токена
+      const decodedToken = jwtDecode(token);
+      console.log(decodedToken); // Печатает декодированную информацию из токена
+
+      // Пример доступа к данным о пользователе
+      const user = {
+        login: decodedToken.login,
+        role: decodedToken.role,
+        _id: decodedToken._id,
+      };
+      userStore.setUser(user);
+    } catch (error) {
+      console.error('Failed to decode token:', error);
+    }
+  }
+  return !!token; // Проверка наличия токена
+};
 
 const routes = [
   {
@@ -22,14 +46,6 @@ const routes = [
       requiresAuth: true,
     },
     children: [
-      {
-        path: '/admin/login',
-        component: () => import('@/views/login/LoginPage.vue'),
-        name: 'loginINADMIN',
-        meta: {
-          requiresAuth: true,
-        },
-      },
       {
         path: '/admin/test',
         component: () => import('@/components/test.vue'),
@@ -60,18 +76,14 @@ export const router = createRouter({
   routes,
 });
 
-// router.beforeEach(async (to, from, next) => {
-//   const authStore = useAuthStore();
-//   console.log(authStore.isAuthenticated);
-//   // Если маршрут требует авторизации
-//   if (to.matched.some((record) => record.meta.requiresAuth)) {
-//     // Проверяем состояние авторизации
-//     if (authStore.isAuthenticated) {
-//       next(); // Пользователь авторизован, разрешаем доступ
-//     } else {
-//       next('/login'); // Пользователь не авторизован, перенаправляем на /login
-//     }
-//   } else {
-//     next(); // Маршрут не требует авторизации, разрешаем доступ
-//   }
-// });
+// Глобальный охранник навигации
+router.beforeEach((to, from, next) => {
+  const userStore = useUserStore();
+  isAuthenticated(userStore);
+  if (to.meta.requiresAuth && !isAuthenticated(userStore)) {
+    // Если маршрут требует авторизации, но пользователь не авторизован
+    next('/login'); // Перенаправляем на страницу входа
+  } else {
+    next(); // Продолжаем навигацию
+  }
+});

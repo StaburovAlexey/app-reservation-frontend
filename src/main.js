@@ -1,7 +1,6 @@
 // Используем watchEffect для динамического обновления ElementPlus при изменении размера
 import { createApp, reactive } from 'vue';
 import { createPinia } from 'pinia';
-import { useAuthStore } from '@/stores/authStore.js';
 import { router } from './router/index.js';
 import '@/assets/normalize.css';
 import './style.css';
@@ -35,16 +34,14 @@ updateSize();
 
 // Создаем приложение и передаем глобальный размер ElementPlus
 const app = createApp(App)
-  .use(router)
   .use(pinia)
+  .use(router)
   .use(ElementPlus, { size: state.size });
+
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);
 }
 
 // Инициализация проверки токена при загрузке приложения
-const authStore = useAuthStore(pinia);
 
-authStore.checkAuth().then(() => {
-  app.mount('#app');
-});
+app.mount('#app');
