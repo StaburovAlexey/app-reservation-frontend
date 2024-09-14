@@ -90,7 +90,7 @@ const validate = async () => {
   });
 };
 const user = computed(() => userStore.user);
-console.log('user в test', user);
+
 onMounted(() => {
   fetchUsers();
 });

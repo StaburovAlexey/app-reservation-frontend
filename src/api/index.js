@@ -31,7 +31,11 @@ const performRequest = async (requestConfig) => {
   try {
     return await apiClient(requestConfig);
   } catch (error) {
-    if (error.response && error.response.status === 401) {
+    console.log('пытаемся обновить токен', error);
+    if (
+      (error.response && error.response.status === 401) ||
+      error.response.status === 403
+    ) {
       // Обновляем токен и повторяем запрос
       const newToken = await updateTokens();
       requestConfig.headers.Authorization = `Bearer ${newToken}`;
