@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-
+import { logoutUser } from '@/api/index.js';
 export const useUserStore = defineStore('user', {
   state: () => ({
     user: null,
@@ -10,8 +10,7 @@ export const useUserStore = defineStore('user', {
     },
     logout() {
       this.user = null;
-      localStorage.removeItem('token'); // Очистка токена
-      localStorage.removeItem('refreshToken'); // Очистка токена
+      logoutUser();
     },
   },
   getters: {

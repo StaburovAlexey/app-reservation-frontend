@@ -5,15 +5,14 @@ const apiClient = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true, // Позволяет отправлять cookies
 });
 
 // Функция для обновления токенов
 const updateTokens = async () => {
-  const refreshToken = localStorage.getItem('refreshToken');
   try {
-    const response = await apiClient.post('/refresh-token', { refreshToken });
+    const response = await apiClient.post('/refresh-token'); // Отправляем запрос без refreshToken в теле
     localStorage.setItem('token', response.data.token);
-    localStorage.setItem('refreshToken', response.data.refreshToken);
     return response.data.token;
   } catch (error) {
     throw new Error('Unable to refresh token');
@@ -68,8 +67,7 @@ export const loginUser = async (login, password) => {
       url: '/login',
       data: { login, password },
     });
-    localStorage.setItem('token', response.data.tokens.token);
-    localStorage.setItem('refreshToken', response.data.tokens.refreshToken);
+    localStorage.setItem('token', response.data.token); // Устанавливаем только новый Access Token
     return response.data;
   } catch (error) {
     throw error.response.data;
@@ -86,5 +84,15 @@ export const getUsers = async () => {
     return response.data;
   } catch (error) {
     throw error.response.data;
+  }
+};
+
+// Функция для выхода из системы
+export const logoutUser = async () => {
+  try {
+    await apiClient.post('/logout'); // Отправляем запрос на сервер для удаления refreshToken
+    localStorage.removeItem('token'); // Удаляем Access Token из localStorage
+  } catch (error) {
+    throw new Error('Unable to log out');
   }
 };
