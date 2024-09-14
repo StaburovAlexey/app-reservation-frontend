@@ -2,6 +2,9 @@
   <div class="conteiner-test">
     <span>USER: {{ user }}</span>
     <span>USERS LIST:{{ users }}</span>
+    <el-button class="btn-submit" type="primary" @click="fetchUsers">
+      Зарегистроировать
+    </el-button>
     <el-form
       ref="formRef"
       :model="form"

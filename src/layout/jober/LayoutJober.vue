@@ -1,6 +1,7 @@
 <template>
   <div class="layout-container__jober">
     <Header :collapseEnabled="false"></Header>
+    <p>JOBER</p>
   </div>
 </template>
 

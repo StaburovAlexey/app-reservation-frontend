@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { router } from '@/router';
 
 const apiClient = axios.create({
   baseURL: 'http://localhost:3000', // Убедитесь, что URL соответствует вашему серверу
@@ -15,7 +16,13 @@ const updateTokens = async () => {
     localStorage.setItem('token', response.data.token);
     return response.data.token;
   } catch (error) {
-    throw new Error('Unable to refresh token');
+    if (error.response.status === 401 || error.response.status === 403) {
+      // Перенаправляем на страницу входа или показываем сообщение о необходимости повторного входа
+      localStorage.removeItem('token');
+      router.push('/login'); // Или используйте Vue Router для навигации
+    } else {
+      throw new Error('Unable to refresh token');
+    }
   }
 };
 

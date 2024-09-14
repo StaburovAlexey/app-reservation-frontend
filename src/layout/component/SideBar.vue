@@ -16,7 +16,9 @@
         <router-link to="/admin/test">
           <el-menu-item index="1-1">TEST</el-menu-item>
         </router-link>
-        <el-menu-item index="1-2">item two</el-menu-item>
+        <router-link to="/jober">
+          <el-menu-item index="1-1">JOBER</el-menu-item>
+        </router-link>
       </el-menu-item-group>
       <el-menu-item-group title="Group Two">
         <el-menu-item index="1-3">item three</el-menu-item>
