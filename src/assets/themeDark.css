@@ -2,6 +2,7 @@
   --el-backgroud-color-base: #121212;
   --el-color-icon-base: #b0bec5;
   --el-color-black: #000000;
+  --color-base-text: var(--el-text-color-primary);
   --el-text-color-primary: #b0bec5;
   --el-color-primary-rgb: 64, 158, 255;
   --el-color-success-rgb: 103, 194, 58;
@@ -103,7 +104,7 @@
   --el-text-color-secondary: #909399;
   --el-text-color-placeholder: #a8abb2;
   --el-text-color-disabled: #c0c4cc;
-  --el-border-color: none;
+  --el-border-color: #777779 !important;
   --el-border-color-light: #e4e7ed;
   --el-border-color-lighter: #ebeef5;
 

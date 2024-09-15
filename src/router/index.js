@@ -36,6 +36,7 @@ const routes = [
     name: '/',
     meta: {
       requiresAuth: true,
+      role: ['admin'],
     },
   },
   {
@@ -43,15 +44,73 @@ const routes = [
     component: () => import('@/layout/admin/LayoutAdmin.vue'),
     name: 'admin',
     meta: {
+      title: 'Главная',
       requiresAuth: true,
+      parent: true,
+      role: ['admin'],
     },
     children: [
+      {
+        path: '/admin/users-list',
+        component: () => import('@/views/usersList/UsersList.vue'),
+        name: 'userslist6',
+        meta: {
+          title: 'Список пользователей',
+          requiresAuth: true,
+          role: ['admin'],
+        },
+        children: [
+          {
+            path: '/admin/users-list',
+            component: () => import('@/views/usersList/UsersList.vue'),
+            name: 'userslist',
+            meta: {
+              title: 'Список пользователей',
+              requiresAuth: true,
+              role: ['admin'],
+            },
+          },
+          {
+            path: '/admin/users-list',
+            component: () => import('@/views/usersList/UsersList.vue'),
+            name: 'userslist1',
+            meta: {
+              title: 'Список пользователей',
+              requiresAuth: true,
+              role: ['admin'],
+            },
+          },
+          {
+            path: '/admin/users-list',
+            component: () => import('@/views/usersList/UsersList.vue'),
+            name: 'userslist2',
+            meta: {
+              title: 'Список пользователей',
+              requiresAuth: true,
+              role: ['admin'],
+            },
+          },
+        ],
+      },
+      {
+        path: '/admin/reservation-list',
+        component: () =>
+          import('@/views/listOfReservations/ListOfReservations.vue'),
+        name: 'listofreservation',
+        meta: {
+          title: 'Список резервов',
+          requiresAuth: true,
+          role: ['admin'],
+        },
+      },
       {
         path: '/admin/test',
         component: () => import('@/components/test.vue'),
         name: 'test',
         meta: {
+          title: 'Тестовая',
           requiresAuth: true,
+          role: ['admin'],
         },
       },
     ],
@@ -61,13 +120,19 @@ const routes = [
     component: () => import('@/layout/jober/LayoutJober.vue'),
     name: 'main-page',
     meta: {
+      title: 'Главная',
       requiresAuth: true,
+      parent: true,
+      role: ['jober'],
     },
   },
   {
     path: '/login',
     component: () => import('@/views/login/LoginPage.vue'),
     name: 'login',
+    meta: {
+      hidden: true,
+    },
   },
 ];
 

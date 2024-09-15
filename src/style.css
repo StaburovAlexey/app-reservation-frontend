@@ -2,6 +2,7 @@
 @import url('./assets/themeWhite.css');
 body {
   font-family: 'Gill Sans', sans-serif;
+  color: var(--color-base-text)
 }
 #app {
   width: 100%;

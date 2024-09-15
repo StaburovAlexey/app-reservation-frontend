@@ -1,64 +1,47 @@
 <template>
-  <el-menu
-    default-active="2"
-    class="side-bar"
-    :collapse="openSidebar"
-    @open="handleOpen"
-    @close="handleClose"
-  >
-    <el-sub-menu index="1">
-      <template #title>
-        <el-icon><location /></el-icon>
-        <span>Navigator One</span>
-      </template>
-      <el-menu-item-group>
-        <template #title><span>Group One</span></template>
-        <router-link to="/admin/test">
-          <el-menu-item index="1-1">TEST</el-menu-item>
-        </router-link>
-        <router-link to="/jober">
-          <el-menu-item index="1-1">JOBER</el-menu-item>
-        </router-link>
-      </el-menu-item-group>
-      <el-menu-item-group title="Group Two">
-        <el-menu-item index="1-3">item three</el-menu-item>
-      </el-menu-item-group>
-      <el-sub-menu index="1-4">
-        <template #title><span>item four</span></template>
-        <el-menu-item index="1-4-1">item one</el-menu-item>
-      </el-sub-menu>
-    </el-sub-menu>
-    <el-menu-item index="2">
-      <template #title>Navigator Two</template>
-    </el-menu-item>
-    <el-menu-item index="3" disabled>
-      <el-icon><document /></el-icon>
-      <template #title>Navigator Three</template>
-    </el-menu-item>
-    <el-menu-item index="4">
-      <el-icon><setting /></el-icon>
-      <template #title>Navigator Four</template>
-    </el-menu-item>
+  <el-menu class="side-bar" :collapse="openSidebar">
+    <ItemSideBar
+      v-for="(item, index) in routesForRole"
+      :value="item"
+      :index="`${index}`"
+      :key="item.name"
+    ></ItemSideBar>
   </el-menu>
 </template>
 
 <script setup>
-import { toRefs } from 'vue';
-
+import ItemSideBar from './ItemSideBar.vue';
+import { toRefs, onMounted, reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useUserStore } from '@/stores/userStore.js';
 // Определяем props
 const props = defineProps({
   openSidebar: Boolean, // Ожидаем, что openSidebar будет булевым значением
 });
 // Приводим openSidebar к реактивности
 const { openSidebar } = toRefs(props);
-// Определяем методы handleOpen и handleClose
-function handleOpen() {
-  console.log('Sidebar opened');
+const router = useRouter();
+const routes = router.getRoutes();
+const userStore = useUserStore();
+const routesForRole = ref([]);
+
+//ищем роуты для определенной роли
+function getRoutesForRole() {
+  //ищем родительские роуты
+  const filtredRoutesParent = routes.filter((route) => {
+    return route.meta.parent;
+  });
+
+  // получаем из родителя children
+  routesForRole.value = filtredRoutesParent.find((route) => {
+    return route.meta.role.includes(userStore.user.role);
+  }).children;
 }
 
-function handleClose() {
-  console.log('Sidebar closed');
-}
+onMounted(() => {
+  getRoutesForRole();
+  console.log(routesForRole.value);
+});
 </script>
 
 <style scoped>
