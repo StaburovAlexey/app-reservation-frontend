@@ -59,7 +59,6 @@ export default {
         const response = await loginUser(form.login, form.password);
         // Логика после успешного логина
         userStore.setUser(response.user); // Сохранение пользователя и токена в store
-        router.push('/admin');
       } catch (error) {
         console.error('Login failed:', error);
       }
