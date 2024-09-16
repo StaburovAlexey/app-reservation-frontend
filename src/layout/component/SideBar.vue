@@ -1,9 +1,14 @@
 <template>
-  <el-menu class="side-bar" :collapse="openSidebar">
+  <el-menu
+    :class="[isJober ? 'side-bar-jober' : 'side-bar']"
+    :router="true"
+    :default-active="route.path"
+    :collapse="openSidebar"
+  >
     <ItemSideBar
       v-for="(item, index) in routesForRole"
       :value="item"
-      :index="`${index}`"
+      :index="`${item.path}`"
       :key="item.name"
     ></ItemSideBar>
   </el-menu>
@@ -12,15 +17,23 @@
 <script setup>
 import ItemSideBar from './ItemSideBar.vue';
 import { toRefs, onMounted, reactive, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { useUserStore } from '@/stores/userStore.js';
 // Определяем props
 const props = defineProps({
-  openSidebar: Boolean, // Ожидаем, что openSidebar будет булевым значением
+  openSidebar: {
+    type: Boolean,
+    default: false,
+  }, // Ожидаем, что openSidebar будет булевым значением
+  isJober: {
+    type: Boolean,
+    default: false,
+  },
 });
 // Приводим openSidebar к реактивности
-const { openSidebar } = toRefs(props);
+const { openSidebar, jober } = toRefs(props);
 const router = useRouter();
+const route = useRoute();
 const routes = router.getRoutes();
 const userStore = useUserStore();
 const routesForRole = ref([]);
@@ -32,6 +45,7 @@ function getRoutesForRole() {
     return route.meta.parent;
   });
 
+  console.log('parent for role: ', filtredRoutesParent);
   // получаем из родителя children
   routesForRole.value = filtredRoutesParent.find((route) => {
     return route.meta.role.includes(userStore.user.role);
@@ -53,12 +67,28 @@ onMounted(() => {
   box-shadow: var(--el-box-shadow-light-right);
   flex-shrink: 0;
 }
+.side-bar-jober:not(.el-menu--collapse) {
+  width: 250px;
+  height: 100%;
+  position: relative;
+  z-index: 20;
+  box-shadow: var(--el-box-shadow-light-right);
+  flex-shrink: 0;
+}
 .el-menu--collapse {
   position: relative;
   z-index: 20;
   box-shadow: var(--el-box-shadow-light-right);
 }
 
-:deep(.el-menu--inline) {
+.user-card {
+  height: 50px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 5px;
+  gap: 10px;
+  box-sizing: border-box;
 }
 </style>

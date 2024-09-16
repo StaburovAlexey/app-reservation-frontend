@@ -1,16 +1,26 @@
 @import url('./assets/themeDark.css');
 @import url('./assets/themeWhite.css');
+
 body {
   font-family: 'Gill Sans', sans-serif;
-  color: var(--color-base-text)
+  color: var(--color-base-text);
+  
+}
+a {
+  color: var(--color-base-text);
+  text-decoration: none;
 }
 #app {
   width: 100%;
-  height: 100vh;
+  height: 100svh;
+  box-sizing: border-box;
 }
 .el-icon {
   color: var(--el-color-icon-base);
 }
 .el-menu {
   border-right: 0;
+}
+.router-link-active {
+  color: var(--el-color-primary);
 }

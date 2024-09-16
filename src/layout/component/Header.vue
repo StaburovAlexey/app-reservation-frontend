@@ -13,10 +13,15 @@
     >
       <Operation />
     </el-icon>
+    <el-icon
+      v-if="!collapseEnabled"
+      class="icon-burger"
+      size="25"
+      @click="clickBurger"
+    >
+      <Operation />
+    </el-icon>
     <div class="header__btn-conteiner">
-      <el-icon v-if="!collapseEnabled" class="icon-burger" size="25" @click="">
-        <Operation />
-      </el-icon>
       <el-icon class="icon-burger" size="25" @click="toggleThemeColor">
         <Sunny v-if="isWhiteTheme" />
         <Moon v-else />
@@ -27,7 +32,7 @@
 </template>
 
 <script setup>
-import { ref, defineEmits, defineProps, computed } from 'vue';
+import { ref, defineEmits, defineProps, computed, onMounted } from 'vue';
 import { useUserStore } from '@/stores/userStore.js';
 import { useRouter } from 'vue-router';
 
@@ -51,8 +56,12 @@ const emit = defineEmits(['clickBurger']);
 
 // Функция переключает состояние и вызывает событие
 function clickBurger() {
-  isCollapsed.value = !isCollapsed.value; // Переключение класса
-  emit('clickBurger');
+  if (!props.collapseEnabled) {
+    emit('clickBurger');
+  } else {
+    isCollapsed.value = !isCollapsed.value;
+    emit('clickBurger');
+  }
 }
 function logout() {
   const userStore = useUserStore();

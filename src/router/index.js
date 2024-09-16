@@ -53,23 +53,14 @@ const routes = [
       {
         path: '/admin/users-list',
         component: () => import('@/views/usersList/UsersList.vue'),
-        name: 'userslist6',
+        name: 'userslist',
         meta: {
           title: 'Список пользователей',
           requiresAuth: true,
           role: ['admin'],
+          icon: 'List',
         },
         children: [
-          {
-            path: '/admin/users-list',
-            component: () => import('@/views/usersList/UsersList.vue'),
-            name: 'userslist',
-            meta: {
-              title: 'Список пользователей',
-              requiresAuth: true,
-              role: ['admin'],
-            },
-          },
           {
             path: '/admin/users-list',
             component: () => import('@/views/usersList/UsersList.vue'),
@@ -78,16 +69,7 @@ const routes = [
               title: 'Список пользователей',
               requiresAuth: true,
               role: ['admin'],
-            },
-          },
-          {
-            path: '/admin/users-list',
-            component: () => import('@/views/usersList/UsersList.vue'),
-            name: 'userslist2',
-            meta: {
-              title: 'Список пользователей',
-              requiresAuth: true,
-              role: ['admin'],
+              icon: 'List',
             },
           },
         ],
@@ -101,6 +83,7 @@ const routes = [
           title: 'Список резервов',
           requiresAuth: true,
           role: ['admin'],
+          icon: 'List',
         },
       },
       {
@@ -111,6 +94,7 @@ const routes = [
           title: 'Тестовая',
           requiresAuth: true,
           role: ['admin'],
+          icon: 'Promotion',
         },
       },
     ],
@@ -125,6 +109,28 @@ const routes = [
       parent: true,
       role: ['jober'],
     },
+    children: [
+      {
+        path: '/jober',
+        component: () => import('@/layout/jober/LayoutJober.vue'),
+        name: 'main-page1',
+        meta: {
+          title: 'Главная',
+          requiresAuth: true,
+          role: ['jober'],
+        },
+      },
+      {
+        path: '/jober',
+        component: () => import('@/layout/jober/LayoutJober.vue'),
+        name: 'main-page2',
+        meta: {
+          title: 'Главная',
+          requiresAuth: true,
+          role: ['jober'],
+        },
+      },
+    ],
   },
   {
     path: '/login',
