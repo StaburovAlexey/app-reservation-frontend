@@ -7,10 +7,15 @@
     ></Header>
     <el-drawer v-model="drawer" direction="ltr" :size="250">
       <template class="user-card" #header>
-        <el-icon><User /></el-icon>
-        <span>
-          Login:{{ user.login }} Role: {{ user.role }} Id:{{ user._id }}
-        </span>
+        <div class="block">
+          <el-avatar
+            :size="40"
+            src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+          />
+        </div>
+        <div class="conteiner-user__info">
+          <el-text class="mx-1" size="small">{{ user.login }}</el-text>
+        </div>
       </template>
       <SideBar :isJober="true"></SideBar>
     </el-drawer>
@@ -47,15 +52,12 @@ export default {
   flex-direction: row;
   overflow: hidden;
 }
-.user-card {
-  height: 50px;
-  width: 100%;
+
+.conteiner-user__info {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 5px;
-  gap: 10px;
-  box-sizing: border-box;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
 }
 :deep(.el-drawer__body) {
   padding: 0 !important;
@@ -63,6 +65,17 @@ export default {
 :deep(.el-drawer__header) {
   border-right: 1px solid var(--el-menu-border-color);
   margin-bottom: 0;
-  padding-bottom: 20px;
+  padding: 10px 10px 20px 10px;
+  gap: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+:deep(.el-drawer__header > :first-child) {
+  flex: 0;
+}
+:deep(.el-text) {
+  max-width: 150px;
+  word-wrap: break-word;
 }
 </style>
