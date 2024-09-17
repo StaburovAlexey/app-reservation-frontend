@@ -1,7 +1,13 @@
 <template>
-  <div></div>
+  <CustomCard>
+    <template #body>
+      <div></div>
+    </template>
+  </CustomCard>
 </template>
 
-<script setup></script>
+<script setup>
+import CustomCard from '@/components/custom-element/CustomCard.vue';
+</script>
 
-<style lang="scss" scoped></style>
+<style scoped></style>

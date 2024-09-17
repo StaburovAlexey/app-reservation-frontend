@@ -79,6 +79,7 @@ onMounted(() => {
   position: relative;
   z-index: 20;
   box-shadow: var(--el-box-shadow-light-right);
+  flex-shrink: 0;
 }
 
 .user-card {

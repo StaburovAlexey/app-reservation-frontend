@@ -60,19 +60,6 @@ const routes = [
           role: ['admin'],
           icon: 'List',
         },
-        children: [
-          {
-            path: '/admin/users-list',
-            component: () => import('@/views/usersList/UsersList.vue'),
-            name: 'userslist1',
-            meta: {
-              title: 'Список пользователей',
-              requiresAuth: true,
-              role: ['admin'],
-              icon: 'List',
-            },
-          },
-        ],
       },
       {
         path: '/admin/reservation-list',
