@@ -18,13 +18,16 @@ const { openSidebar } = toRefs(props);
 <style scoped>
 .app-conteiner {
   height: calc(100vh - 50px);
-  width: 100%;
+  width: calc(100% - 250px);
   height: 100%;
   box-sizing: border-box;
   background-color: var(--el-backgroud-color-base);
   display: flex;
   padding: 20px;
+  transition: all 0.25s linear;
 }
 .app-conteiner-collapse {
+  width: 100%;
+  transition: all 0.25s linear;
 }
 </style>
