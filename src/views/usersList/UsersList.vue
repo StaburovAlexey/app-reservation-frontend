@@ -12,9 +12,28 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="login" label="Почта" width="180" />
-        <el-table-column prop="role" label="Роль" width="180" />
-        <el-table-column prop="_id" label="ID в системе" />
+        <el-table-column prop="login" label="Почта" />
+        <el-table-column prop="role" label="Роль" />
+        <el-table-column prop="_id" label="ID" />
+        <el-table-column fixed="right" width="100">
+          <template #header>
+            <div class="btn-container__table-header">
+              <el-button type="primary" size="small" @click="">
+                Добавить
+              </el-button>
+            </div>
+          </template>
+          <template #default="scope">
+            <div class="btn-container__table-row">
+              <el-button size="small" class="table-btn">
+                <el-icon><EditPen /></el-icon>
+              </el-button>
+              <el-button size="small" class="table-btn">
+                <el-icon><Delete /></el-icon>
+              </el-button>
+            </div>
+          </template>
+        </el-table-column>
       </el-table>
     </template>
   </CustomCard>

@@ -4,7 +4,6 @@
 body {
   font-family: 'Gill Sans', sans-serif;
   color: var(--color-base-text);
-  
 }
 a {
   color: var(--color-base-text);
@@ -23,4 +22,19 @@ a {
 }
 .router-link-active {
   color: var(--el-color-primary);
+}
+
+.btn-container__table-header {
+  display: flex;
+  justify-content: center;
+
+}
+.btn-container__table-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+.table-btn {
 }
