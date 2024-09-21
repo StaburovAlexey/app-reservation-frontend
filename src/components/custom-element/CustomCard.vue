@@ -1,7 +1,13 @@
 <template>
   <el-card
     body-class="body-class"
-    style="width: 100%; display: flex; flex-direction: column; height: 100%; box-sizing: border-box;"
+    style="
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      box-sizing: border-box;
+    "
   >
     <template #header>
       <div class="card-header">
