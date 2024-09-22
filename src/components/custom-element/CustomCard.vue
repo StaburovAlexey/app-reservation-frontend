@@ -14,7 +14,7 @@
         <span>{{ title }}</span>
       </div>
     </template>
-    <slot name="body" />
+    <slot name="body"></slot>
     <template #footer v-if="footer">Footer content</template>
   </el-card>
 </template>

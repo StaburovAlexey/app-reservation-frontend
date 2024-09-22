@@ -1,47 +1,49 @@
 <template>
   <CustomDialog
     title="Создать пользователя"
-    width="70%"
+    width="50%"
     :open="openDialog"
     @close="close"
     @confirm="saveModal"
     v-loading="loading"
   >
-    <el-form
-      ref="refForm"
-      :rules="rules"
-      :model="form"
-      :inline-message="true"
-      label-width="auto"
-      style="max-width: 600px"
-    >
-      <el-form-item label="Логин" prop="login">
-        <el-input v-model="form.login" />
-      </el-form-item>
-      <el-form-item label="Пароль" prop="password">
-        <el-input v-model="form.password" />
-      </el-form-item>
-      <el-form-item label="Роль" prop="role">
-        <el-select v-model="form.role" placeholder="Выбирите роль из списка">
-          <el-option
-            v-for="(role, index) in roles"
-            :key="role"
-            :label="role == 'admin' ? 'Администратор' : 'Официант'"
-            :value="role"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="Имя и фамилия" prop="name">
-        <el-input v-model="form.name" />
-      </el-form-item>
-    </el-form>
+    <template #body>
+      <el-form
+        ref="refForm"
+        :rules="rules"
+        :model="form"
+        :inline-message="true"
+        label-width="auto"
+        style="max-width: 600px"
+      >
+        <el-form-item label="Логин" prop="login">
+          <el-input v-model="form.login" clearable />
+        </el-form-item>
+        <el-form-item label="Пароль" prop="password">
+          <el-input v-model="form.password" clearable />
+        </el-form-item>
+        <el-form-item label="Роль" prop="role">
+          <el-select v-model="form.role" placeholder="Выбирите роль из списка">
+            <el-option
+              v-for="(role, index) in roles"
+              :key="role"
+              :label="role == 'admin' ? 'Администратор' : 'Официант'"
+              :value="role"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="Имя и фамилия" prop="name">
+          <el-input v-model="form.name" clearable />
+        </el-form-item>
+      </el-form>
+    </template>
   </CustomDialog>
 </template>
 
 <script setup>
 import CustomDialog from '../custom-element/CustomDialog.vue';
 import { registerUser } from '@/api/index.js';
-import { ref, watch } from 'vue';
+import { ref, watch, getCurrentInstance } from 'vue';
 const props = defineProps({
   open: {
     type: Boolean,
@@ -116,15 +118,15 @@ const rules = ref({
 });
 const roles = ref(['admin', 'jober']);
 
-const saveModal = async () => {
-    loading.value = true;
-  refForm.value.validate((valid) => {
+const saveModal = () => {
+  loading.value = true;
+  refForm.value.validate(async (valid) => {
     if (valid) {
       // Логика отправки данных на сервер
-      const res = registerUser(form.value);
-    } else {
-      console.log('Ошибка валидации');
-      return false;
+      const res = await registerUser(form.value).then((res) => {
+        emits('close');
+        form.value = {};
+      });
     }
   });
   loading.value = false;

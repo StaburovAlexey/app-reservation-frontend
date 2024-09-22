@@ -9,6 +9,7 @@ import 'element-plus/dist/index.css';
 import ElementPlus from 'element-plus';
 import App from './App.vue';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue';
+import { ElNotification } from 'element-plus';
 
 const pinia = createPinia();
 
@@ -37,11 +38,10 @@ const app = createApp(App)
   .use(pinia)
   .use(router)
   .use(ElementPlus, { size: state.size });
-
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component);
 }
 
 // Инициализация проверки токена при загрузке приложения
-
+app.config.globalProperties.notify = ElNotification;
 app.mount('#app');

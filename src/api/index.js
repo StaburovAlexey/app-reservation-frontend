@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { router } from '@/router';
-
+import { ElNotification } from 'element-plus';
 // Создаем экземпляр Axios с общими настройками
 const apiClient = axios.create({
   baseURL: 'http://localhost:3000', // Базовый URL для запросов
@@ -29,7 +29,11 @@ apiClient.interceptors.response.use(
     // Проверяем, есть ли ошибка в ответе
     if (error.response) {
       const status = error.response.status;
-
+      ElNotification({
+        title: 'Ошибка сервера!',
+        message: `${error.response.data.message}`,
+        type: 'error',
+      });
       // Если статус ошибки 401 (Unauthorized)
       if (status === 401) {
         // Удаляем токен из localStorage
@@ -53,13 +57,14 @@ export const registerUser = async (user) => {
     const response = await apiClient.post('/register', {
       ...user,
     });
-    console.log('Пользователь зарегистрирован:', response.data);
+    ElNotification({
+      title: 'Успешно!',
+      message: 'Пользователь зарегистрирован',
+      type: 'success',
+    });
     return response.data;
   } catch (error) {
-    console.error('Ошибка при регистрации:', error);
-    if (error.response && error.response.status === 400) {
-      alert('Пользователь уже существует');
-    }
+    throw error;
   }
 };
 
@@ -75,9 +80,12 @@ export const loginUser = async (login, password) => {
 
     return response.data;
   } catch (error) {
-    console.error('Ошибка при входе:', error);
     if (error.response && error.response.status === 401) {
-      alert('Неверный логин или пароль');
+      ElNotification({
+        title: 'Ошибка!',
+        message: 'Неверный логин или пароль',
+        type: 'error',
+      });
     }
   }
 };
@@ -86,9 +94,7 @@ export const getUsers = async () => {
   try {
     const response = await apiClient.get('/users');
     return response.data;
-  } catch (error) {
-    console.error('Ошибка при получении списка пользователей:', error);
-  }
+  } catch (error) {}
 };
 
 // Функция для выхода из системы
@@ -97,7 +103,5 @@ export const logoutUser = async () => {
     await apiClient.post('/logout');
     localStorage.removeItem('token'); // Удаляем токен из localStorage
     router.push('/login'); // Перенаправляем на страницу входа
-  } catch (error) {
-    console.error('Ошибка при выходе:', error);
-  }
+  } catch (error) {}
 };

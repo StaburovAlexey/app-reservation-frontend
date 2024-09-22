@@ -1,6 +1,13 @@
 <template>
-  <el-dialog v-model="openDialog" :title :width :before-close="close">
-    <slot></slot>
+  <el-dialog
+    v-model="openDialog"
+    :title
+    :width
+    destroy-on-close
+    append-to-body
+    :before-close="close"
+  >
+    <slot name="body"></slot>
     <template #footer>
       <div class="dialog-footer">
         <el-button @click="$emit('close')">Закрыть</el-button>
@@ -33,6 +40,7 @@ const emits = defineEmits(['confirm', 'close']);
 const close = () => {
   emits('close');
 };
+
 const openDialog = ref();
 // Отслеживание изменений пропса open и синхронизация с openDialog
 watch(
