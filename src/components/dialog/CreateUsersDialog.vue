@@ -51,7 +51,7 @@ const props = defineProps({
     required: true,
   },
 });
-const emits = defineEmits(['close']);
+const emits = defineEmits(['close', 'add-user']);
 const openDialog = ref(false);
 const form = ref({
   login: '',
@@ -124,6 +124,7 @@ const saveModal = () => {
     if (valid) {
       // Логика отправки данных на сервер
       const res = await registerUser(form.value).then((res) => {
+        emits('add-user', res.user);
         emits('close');
         form.value = {};
       });

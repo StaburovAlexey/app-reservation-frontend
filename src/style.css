@@ -31,6 +31,7 @@ a {
 .btn-container__table-row {
   display: flex;
   flex-direction: row;
+  gap: 5px;
   justify-content: center;
   width: 100%;
   box-sizing: border-box;

@@ -29,11 +29,11 @@ apiClient.interceptors.response.use(
     // Проверяем, есть ли ошибка в ответе
     if (error.response) {
       const status = error.response.status;
-      ElNotification({
-        title: 'Ошибка сервера!',
-        message: `${error.response.data.message}`,
-        type: 'error',
-      });
+      // ElNotification({
+      //   title: 'Ошибка сервера!',
+      //   message: `${error.response.data.message}`,
+      //   type: 'error',
+      // });
       // Если статус ошибки 401 (Unauthorized)
       if (status === 401) {
         // Удаляем токен из localStorage

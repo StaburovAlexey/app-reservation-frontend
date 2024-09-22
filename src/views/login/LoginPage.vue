@@ -6,6 +6,7 @@
       :rules="rules"
       label-width="auto"
       class="form"
+      @submit.native.prevent="validate"
     >
       <img src="../../assets/vue.svg" alt="Logo" class="logo" />
       <el-form-item label="Почта" prop="login">
@@ -15,10 +16,14 @@
         <el-input v-model="form.password" type="password" />
       </el-form-item>
       <el-form-item class="form__button-container">
-        <el-button class="btn-submit" type="primary" @click="validate">
+        <el-button
+          class="btn-submit"
+          type="primary"
+          @click="validate"
+          native-type="submit"
+        >
           Войти
         </el-button>
-        <router-link to="/admin">Главная</router-link>
       </el-form-item>
     </el-form>
   </div>
@@ -27,7 +32,7 @@
 <script>
 import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { registerUser, loginUser, getUsers } from '@/api/index.js';
+import { loginUser } from '@/api/index.js';
 import { useUserStore } from '@/stores/userStore.js';
 export default {
   setup() {
@@ -58,6 +63,7 @@ export default {
       try {
         const response = await loginUser(form.login, form.password);
         // Логика после успешного логина
+        console.log(response);
         userStore.setUser(response.user); // Сохранение пользователя и токена в store
         const role = response.user.role;
         router.push(`/${role}`);
