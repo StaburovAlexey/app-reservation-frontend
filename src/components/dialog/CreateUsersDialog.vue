@@ -42,7 +42,7 @@
 
 <script setup>
 import CustomDialog from '../custom-element/CustomDialog.vue';
-import { registerUser } from '@/api/index.js';
+import { registerUser, editUser } from '@/api/index.js';
 import { ref, watch, getCurrentInstance } from 'vue';
 const props = defineProps({
   open: {
@@ -50,8 +50,12 @@ const props = defineProps({
     default: false,
     required: true,
   },
+  userEdit: {
+    type: Object,
+    default: null,
+  },
 });
-const emits = defineEmits(['close', 'add-user']);
+const emits = defineEmits(['close', 'add-user', 'edit-user']);
 const openDialog = ref(false);
 const form = ref({
   login: '',
@@ -122,12 +126,20 @@ const saveModal = () => {
   loading.value = true;
   refForm.value.validate(async (valid) => {
     if (valid) {
+      if (form.value._id) {
+        editUser(form.value).then((res) => {
+          emits('edit-user', res.user);
+          emits('close');
+          form.value = {};
+        });
+      } else {
+        const res = await registerUser(form.value).then((res) => {
+          emits('add-user', res.user);
+          emits('close');
+          form.value = {};
+        });
+      }
       // Логика отправки данных на сервер
-      const res = await registerUser(form.value).then((res) => {
-        emits('add-user', res.user);
-        emits('close');
-        form.value = {};
-      });
     }
   });
   loading.value = false;
@@ -140,6 +152,17 @@ watch(
   () => props.open,
   (newVal) => {
     openDialog.value = newVal;
+  },
+  () => props.userEdit,
+  (newValue) => {
+    console.log(form.value);
+    form.value = newValue;
+  },
+);
+watch(
+  () => props.userEdit,
+  (newValue) => {
+    form.value = newValue;
   },
 );
 </script>

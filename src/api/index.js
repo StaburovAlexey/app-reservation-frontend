@@ -132,3 +132,34 @@ export const deleteUser = async (userId, userLogin) => {
     throw error;
   }
 };
+// Функция для редактирования пользователя
+export const editUser = async (user) => {
+  const { _id, login, newLogin, newPassword, newRole } = user;
+  try {
+    const response = await apiClient.put('/users', {
+      _id,
+      login,
+      newLogin,
+      newPassword,
+      newRole,
+    });
+
+    ElNotification({
+      title: 'Успешно!',
+      message: 'Пользователь обновлен',
+      type: 'success',
+    });
+
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      ElNotification({
+        title: 'Ошибка!',
+        message:
+          error.response.data.message || 'Не удалось обновить пользователя',
+        type: 'error',
+      });
+    }
+    throw error;
+  }
+};

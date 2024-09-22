@@ -1,10 +1,5 @@
 <template>
-  <el-tooltip
-    :content
-    :placement
-    :enterable="false"
-    :hide-after="1"
-  >
+  <el-tooltip :content :placement :enterable="false" :hide-after="1">
     <slot></slot>
   </el-tooltip>
 </template>

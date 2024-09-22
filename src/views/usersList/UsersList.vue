@@ -20,11 +20,7 @@
         <el-table-column fixed="right" width="100">
           <template #header>
             <div class="btn-container__table-header">
-              <el-button
-                type="primary"
-                size="small"
-                @click="dialogVisible = true"
-              >
+              <el-button type="primary" size="small" @click="openDialogAddUser">
                 Добавить
               </el-button>
             </div>
@@ -32,14 +28,18 @@
           <template #default="scope">
             <div class="btn-container__table-row">
               <CustomTooltip content="Редактировать">
-                <el-button size="small" class="table-btn">
+                <el-button
+                  size="small"
+                  class="table-btn"
+                  @click="openDialogEditUser(scope.row)"
+                >
                   <el-icon><EditPen /></el-icon>
                 </el-button>
               </CustomTooltip>
               <CustomPopConfirm @confirm="delUser(scope.$index, scope.row)">
                 <CustomTooltip content="Удалить">
                   <el-button size="small" class="table-btn">
-                    <el-icon><Delete /></el-icon>
+                    <el-icon color="red"><Delete /></el-icon>
                   </el-button>
                 </CustomTooltip>
               </CustomPopConfirm>
@@ -51,8 +51,10 @@
   </CustomCard>
   <CreateUsersDialog
     :open="dialogVisible"
+    :userEdit="rowActive"
     @close="dialogVisible = false"
     @add-user="addUser"
+    @edit-user="editUser"
   />
 </template>
 
@@ -66,12 +68,25 @@ import { getUsers, deleteUser } from '@/api/index.js';
 
 const tableData = ref([]);
 const dialogVisible = ref(false);
+const rowActive = ref({});
 const delUser = async (index, row) => {
   const res = await deleteUser(row._id, row.login);
   tableData.value.splice(index, 1);
 };
 const addUser = (user) => {
   tableData.value.unshift(user);
+};
+const editUser = (user) => {
+  
+}
+const openDialogAddUser = () => {
+  rowActive.value = {};
+  dialogVisible.value = true;
+};
+const openDialogEditUser = (row) => {
+  rowActive.value = { ...row };
+  console.log(rowActive.value)
+  dialogVisible.value = true;
 };
 onMounted(() => {
   getUsers().then((res) => {
