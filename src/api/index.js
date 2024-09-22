@@ -105,3 +105,30 @@ export const logoutUser = async () => {
     router.push('/login'); // Перенаправляем на страницу входа
   } catch (error) {}
 };
+
+// Функция для удаления пользователя
+export const deleteUser = async (userId, userLogin) => {
+  try {
+    const response = await apiClient.delete('/users', {
+      data: { _id: userId, login: userLogin },
+    });
+
+    ElNotification({
+      title: 'Успешно!',
+      message: 'Пользователь удален',
+      type: 'success',
+    });
+
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      ElNotification({
+        title: 'Ошибка!',
+        message:
+          error.response.data.message || 'Не удалось удалить пользователя',
+        type: 'error',
+      });
+    }
+    throw error;
+  }
+};

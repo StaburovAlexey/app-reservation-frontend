@@ -32,7 +32,11 @@
               <el-button size="small" class="table-btn">
                 <el-icon><EditPen /></el-icon>
               </el-button>
-              <el-button size="small" class="table-btn">
+              <el-button
+                size="small"
+                class="table-btn"
+                @click="delUser(scope.$index, scope.row)"
+              >
                 <el-icon><Delete /></el-icon>
               </el-button>
             </div>
@@ -48,14 +52,17 @@
 import { ref, onMounted } from 'vue';
 import CustomCard from '@/components/custom-element/CustomCard.vue';
 import CreateUsersDialog from '@/components/dialog/CreateUsersDialog.vue';
-import { getUsers } from '@/api/index.js';
+import { getUsers, deleteUser } from '@/api/index.js';
 
 const tableData = ref([]);
 const dialogVisible = ref(false);
+const delUser = async (index, row) => {
+  const res = await deleteUser(row._id, row.login);
+  tableData.value.splice(index, 1);
+};
 onMounted(() => {
   getUsers().then((res) => {
     tableData.value = res;
-    console.log(res);
   });
 });
 </script>

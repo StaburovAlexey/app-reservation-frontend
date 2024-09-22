@@ -4,7 +4,6 @@
     :title
     :width
     destroy-on-close
-    append-to-body
     :before-close="close"
   >
     <slot name="body"></slot>
