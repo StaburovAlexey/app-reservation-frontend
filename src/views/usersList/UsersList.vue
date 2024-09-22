@@ -18,7 +18,11 @@
         <el-table-column fixed="right" width="100">
           <template #header>
             <div class="btn-container__table-header">
-              <el-button type="primary" size="small" @click="">
+              <el-button
+                type="primary"
+                size="small"
+                @click="dialogVisible = true"
+              >
                 Добавить
               </el-button>
             </div>
@@ -37,14 +41,17 @@
       </el-table>
     </template>
   </CustomCard>
+  <CustomDialog v-model:open="dialogVisible" @close="dialogVisible = false" title="Диалоговое окно"/>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
 import CustomCard from '@/components/custom-element/CustomCard.vue';
+import CustomDialog from '@/components/custom-element/CustomDialog.vue';
 import { getUsers } from '@/api/index.js';
 
 const tableData = ref([]);
+const dialogVisible = ref(false);
 onMounted(() => {
   getUsers().then((res) => {
     tableData.value = res;

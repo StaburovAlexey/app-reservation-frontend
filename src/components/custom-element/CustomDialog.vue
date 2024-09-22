@@ -1,5 +1,11 @@
 <template>
-  <el-dialog v-model="open" :title :width destroy-on-close center>
+  <el-dialog
+    v-model="openDialog"
+    :title
+    :width
+    destroy-on-close
+    :before-close="close"
+  >
     <span>
       Notice: before dialog gets opened for the first time this node and the one
       bellow will not be rendered
@@ -9,7 +15,7 @@
     </div>
     <template #footer>
       <div class="dialog-footer">
-        <el-button @click="open = false">Закрыть</el-button>
+        <el-button @click="$emit('close')">Закрыть</el-button>
         <el-button type="primary" @click="$emit('confirm')">
           Сохранить
         </el-button>
@@ -19,7 +25,8 @@
 </template>
 
 <script setup>
-defineProps({
+import { ref, watch } from 'vue';
+const props = defineProps({
   open: {
     type: Boolean,
     default: false,
@@ -27,7 +34,6 @@ defineProps({
   },
   title: {
     type: String,
-    default: 'Notice',
     required: true,
   },
   width: {
@@ -35,7 +41,19 @@ defineProps({
     default: '500',
   },
 });
-defineEmits(['confirm']);
+const emits = defineEmits(['confirm', 'close']);
+const close = () => {
+  emits('close');
+};
+
+const openDialog = ref();
+// Отслеживание изменений пропса open и синхронизация с openDialog
+watch(
+  () => props.open,
+  (newVal) => {
+    openDialog.value = newVal;
+  },
+);
 </script>
 
 <style lang="css" scoped></style>
