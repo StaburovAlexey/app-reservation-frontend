@@ -41,13 +41,13 @@
       </el-table>
     </template>
   </CustomCard>
-  <CustomDialog v-model:open="dialogVisible" @close="dialogVisible = false" title="Диалоговое окно"/>
+  <CreateUsersDialog :open="dialogVisible" @close="dialogVisible = false" />
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
 import CustomCard from '@/components/custom-element/CustomCard.vue';
-import CustomDialog from '@/components/custom-element/CustomDialog.vue';
+import CreateUsersDialog from '@/components/dialog/CreateUsersDialog.vue';
 import { getUsers } from '@/api/index.js';
 
 const tableData = ref([]);

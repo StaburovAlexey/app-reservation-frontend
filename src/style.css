@@ -27,7 +27,6 @@ a {
 .btn-container__table-header {
   display: flex;
   justify-content: center;
-
 }
 .btn-container__table-row {
   display: flex;
@@ -35,4 +34,7 @@ a {
   justify-content: center;
   width: 100%;
   box-sizing: border-box;
+}
+.el-form-item__error {
+ 
 }

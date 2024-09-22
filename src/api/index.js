@@ -48,12 +48,10 @@ apiClient.interceptors.response.use(
 );
 
 // Функции для API-запросов
-export const registerUser = async (login, password, role) => {
+export const registerUser = async (user) => {
   try {
     const response = await apiClient.post('/register', {
-      login,
-      password,
-      role,
+      ...user,
     });
     console.log('Пользователь зарегистрирован:', response.data);
     return response.data;
