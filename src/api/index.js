@@ -134,14 +134,14 @@ export const deleteUser = async (userId, userLogin) => {
 };
 // Функция для редактирования пользователя
 export const editUser = async (user) => {
-  const { _id, login, newLogin, newPassword, newRole } = user;
+  const { _id, login, password, role, name } = user;
   try {
     const response = await apiClient.put('/users', {
       _id,
       login,
-      newLogin,
-      newPassword,
-      newRole,
+      password,
+      role,
+      name,
     });
 
     ElNotification({

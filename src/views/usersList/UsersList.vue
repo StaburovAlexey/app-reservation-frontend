@@ -77,15 +77,14 @@ const addUser = (user) => {
   tableData.value.unshift(user);
 };
 const editUser = (user) => {
-  
-}
+  rowActive.value = user;
+};
 const openDialogAddUser = () => {
   rowActive.value = {};
   dialogVisible.value = true;
 };
 const openDialogEditUser = (row) => {
-  rowActive.value = { ...row };
-  console.log(rowActive.value)
+  rowActive.value = row;
   dialogVisible.value = true;
 };
 onMounted(() => {

@@ -128,15 +128,13 @@ const saveModal = () => {
     if (valid) {
       if (form.value._id) {
         editUser(form.value).then((res) => {
-          emits('edit-user', res.user);
+          emits('edit-user', form.value);
           emits('close');
-          form.value = {};
         });
       } else {
         const res = await registerUser(form.value).then((res) => {
           emits('add-user', res.user);
           emits('close');
-          form.value = {};
         });
       }
       // Логика отправки данных на сервер
@@ -153,17 +151,15 @@ watch(
   (newVal) => {
     openDialog.value = newVal;
   },
-  () => props.userEdit,
-  (newValue) => {
-    console.log(form.value);
-    form.value = newValue;
-  },
+  { deep: true },
 );
 watch(
   () => props.userEdit,
   (newValue) => {
+    console.log(newValue);
     form.value = newValue;
   },
+  { deep: true },
 );
 </script>
 
