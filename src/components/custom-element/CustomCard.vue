@@ -9,7 +9,7 @@
       box-sizing: border-box;
     "
   >
-    <template #header>
+    <template #header v-if="header">
       <div class="card-header">
         <span>{{ title }}</span>
       </div>
@@ -28,6 +28,10 @@ const props = defineProps({
   footer: {
     type: Boolean,
     default: false,
+  },
+  header: {
+    type: Boolean,
+    default: true,
   },
 });
 </script>
