@@ -1,6 +1,8 @@
 <template>
   <el-card
-    body-class="body-class"
+    :body-class="{
+      'body-class': true,
+    }"
     style="
       width: 100%;
       display: flex;
@@ -14,7 +16,9 @@
         <span>{{ title }}</span>
       </div>
     </template>
+   
     <slot name="body"></slot>
+
     <template #footer v-if="footer">Footer content</template>
   </el-card>
 </template>
@@ -43,6 +47,7 @@ const props = defineProps({
   flex: 1;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
 }
 
 :deep(.el-card__header) {

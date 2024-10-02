@@ -16,39 +16,32 @@ import { Canvas, Rect, Line } from 'fabric';
 export default {
   setup() {
     const canvasRef = ref(null);
+    const drawGrid = (gridSize, canvas) => {
+      // Рисуем вертикальные линии
+      for (let i = 0; i < canvas.width / gridSize; i++) {
+        const line = new Line([i * gridSize, 0, i * gridSize, canvas.height], {
+          stroke: '#ccc',
+          selectable: false, // Сетка не должна быть кликабельной
+          evented: false,
+        });
+        canvas.add(line);
+      }
+
+      // Рисуем горизонтальные линии
+      for (let i = 0; i < canvas.height / gridSize; i++) {
+        const line = new Line([0, i * gridSize, canvas.width, i * gridSize], {
+          stroke: '#ccc',
+          selectable: false, // Сетка не должна быть кликабельной
+          evented: false,
+        });
+        canvas.add(line);
+      }
+    };
 
     onMounted(async () => {
       const canvas = new Canvas(canvasRef.value);
-      // Функция для рисования сетки
-      const drawGrid = () => {
-        const gridSize = 33; // Размер сетки (например, 50px)
-
-        // Рисуем вертикальные линии
-        for (let i = 0; i < canvas.width / gridSize; i++) {
-          const line = new Line(
-            [i * gridSize, 0, i * gridSize, canvas.height],
-            {
-              stroke: '#ccc',
-              selectable: false, // Сетка не должна быть кликабельной
-              evented: false,
-            },
-          );
-          canvas.add(line);
-        }
-
-        // Рисуем горизонтальные линии
-        for (let i = 0; i < canvas.height / gridSize; i++) {
-          const line = new Line([0, i * gridSize, canvas.width, i * gridSize], {
-            stroke: '#ccc',
-            selectable: false, // Сетка не должна быть кликабельной
-            evented: false,
-          });
-          canvas.add(line);
-        }
-      };
-
       // Вызываем функцию для рисования сетки
-      drawGrid();
+      drawGrid(63, canvas);
       // Пример добавления объекта на холст
       const rect = new Rect({
         left: 100,
