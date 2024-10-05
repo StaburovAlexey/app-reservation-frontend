@@ -1,5 +1,5 @@
 <template>
-  <custom-card :header="false">
+  <custom-card :header="true">
     <template #body>
       <fabric></fabric>
     </template>

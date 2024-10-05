@@ -12,8 +12,7 @@
         />
       </div>
       <el-checkbox v-model="showGrid">Показать сетку</el-checkbox>
-      <!-- Checkbox to show/hide the grid -->
-      <el-button type="primary">Кнопка 1</el-button>
+      <el-button @click="openDialogCreate" type="primary">Создать</el-button>
       <el-button type="primary">Кнопка 2</el-button>
       <el-button type="primary">Кнопка 3</el-button>
       <el-button type="primary">Кнопка 4</el-button>
@@ -26,86 +25,79 @@
       height="600px"
       style="border: 1px solid rebeccapurple"
     ></canvas>
+    <create-figure-dialog
+      :open="openDialogCreateFigure"
+      @close="openDialogCreateFigure = false"
+    />
   </div>
 </template>
 
-<script>
+<script setup>
 import { ref, onMounted, watch } from 'vue';
 import { Canvas, Rect, Line } from 'fabric';
+import CreateFigureDialog from '../dialog/CreateFigureDialog.vue';
+const canvasRef = ref(null);
+const widthGrid = ref(30);
+const showGrid = ref(true); // State for showing/hiding the grid
+const openDialogCreateFigure = ref(false);
+let canvas = null; // Store the canvas instance
 
-export default {
-  setup() {
-    const canvasRef = ref(null);
-    const widthGrid = ref(30);
-    const showGrid = ref(true); // State for showing/hiding the grid
-    let canvas = null; // Храним экземпляр канваса
+const drawGrid = (gridSize) => {
+  // Remove old grid lines
+  const gridLines = canvas.getObjects().filter((obj) => obj.type === 'line');
+  canvas.remove(...gridLines); // Remove grid lines
 
-    const drawGrid = (gridSize) => {
-      // Удаляем старые линии сетки
-      const gridLines = canvas
-        .getObjects()
-        .filter((obj) => obj.type === 'line');
-      canvas.remove(...gridLines); // Удаляем линии сетки
-
-      if (showGrid.value) {
-        // Проверяем, нужно ли рисовать сетку
-        // Рисуем вертикальные линии
-        for (let i = 0; i < canvas.width / gridSize; i++) {
-          const line = new Line(
-            [i * gridSize, 0, i * gridSize, canvas.height],
-            {
-              stroke: '#ccc',
-              selectable: false,
-              evented: false,
-              type: 'line',
-            },
-          );
-          canvas.add(line);
-        }
-
-        // Рисуем горизонтальные линии
-        for (let i = 0; i < canvas.height / gridSize; i++) {
-          const line = new Line([0, i * gridSize, canvas.width, i * gridSize], {
-            stroke: '#ccc',
-            selectable: false,
-            evented: false,
-            type: 'line',
-          });
-          canvas.add(line);
-        }
-      }
-
-      canvas.renderAll(); // Перерисовываем холст
-    };
-
-    onMounted(() => {
-      canvas = new Canvas(canvasRef.value);
-      drawGrid(widthGrid.value); // Initial grid draw
-
-      // Пример добавления объекта на холст
-      const rect = new Rect({
-        left: 100,
-        top: 100,
-        fill: 'blue',
-        width: 110,
-        height: 110,
+  if (showGrid.value) {
+    // Check if grid should be drawn
+    // Draw vertical lines
+    for (let i = 0; i < canvas.width / gridSize; i++) {
+      const line = new Line([i * gridSize, 0, i * gridSize, canvas.height], {
+        stroke: '#ccc',
+        selectable: false,
+        evented: false,
       });
+      canvas.add(line);
+    }
 
-      canvas.add(rect);
-    });
+    // Draw horizontal lines
+    for (let i = 0; i < canvas.height / gridSize; i++) {
+      const line = new Line([0, i * gridSize, canvas.width, i * gridSize], {
+        stroke: '#ccc',
+        selectable: false,
+        evented: false,
+      });
+      canvas.add(line);
+    }
+  }
 
-    watch([widthGrid, showGrid], () => {
-      drawGrid(widthGrid.value); // Перерисовываем сетку с новой шириной
-      canvas.renderAll(); // Перерисовываем холст после добавления нового объекта
-    });
-
-    return {
-      canvasRef,
-      widthGrid,
-      showGrid, // Return the showGrid ref
-    };
-  },
+  canvas.renderAll(); // Redraw the canvas
 };
+
+onMounted(() => {
+  canvas = new Canvas(canvasRef.value);
+  drawGrid(widthGrid.value); // Initial grid draw
+
+  // Example of adding an object to the canvas
+  const rect = new Rect({
+    left: 100,
+    top: 100,
+    fill: 'blue',
+    width: 110,
+    height: 110,
+  });
+
+  canvas.add(rect);
+});
+
+watch([widthGrid, showGrid], () => {
+  drawGrid(widthGrid.value); // Redraw the grid with new width
+  canvas.renderAll(); // Redraw the canvas after adding a new object
+});
+
+const openDialogCreate = () => {
+  openDialogCreateFigure.value = true;
+};
+
 </script>
 
 <style lang="css" scoped>

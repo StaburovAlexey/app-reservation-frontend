@@ -1,8 +1,6 @@
 <template>
   <el-card
-    :body-class="{
-      'body-class': true,
-    }"
+    body-class="body-class"
     style="
       width: 100%;
       display: flex;
@@ -16,7 +14,7 @@
         <span>{{ title }}</span>
       </div>
     </template>
-   
+
     <slot name="body"></slot>
 
     <template #footer v-if="footer">Footer content</template>
