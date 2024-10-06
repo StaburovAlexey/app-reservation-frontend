@@ -85,8 +85,15 @@ onMounted(() => {
     width: 110,
     height: 110,
   });
-
+  const rect2 = new Rect({
+    left: 0,
+    top: 0,
+    fill: 'blue',
+    width: 50,
+    height: 50,
+  });
   canvas.add(rect);
+  canvas.add(rect2);
 });
 
 watch([widthGrid, showGrid], () => {
@@ -97,7 +104,6 @@ watch([widthGrid, showGrid], () => {
 const openDialogCreate = () => {
   openDialogCreateFigure.value = true;
 };
-
 </script>
 
 <style lang="css" scoped>
