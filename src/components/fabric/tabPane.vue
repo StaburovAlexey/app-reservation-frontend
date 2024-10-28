@@ -211,7 +211,12 @@ const openDialogCreate = () => {
 };
 const changeColor = () => {
   if (selectedObject.value) {
-    selectedObject.value.set('fill', 'orange');
+    if (selectedObject.value.type === 'group') {
+      selectedObject.value.item(0).set('fill', 'orange');
+    } else {
+      selectedObject.value.set('fill', 'orange');
+    }
+
     canvas.value.requestRenderAll();
   }
   isContextMenuVisible.value = false; // Скрываем меню после действия
@@ -240,7 +245,7 @@ const copyShape = () => {
     }
 
     // Смещение копии относительно оригинала
-    cloned.set({
+    selectedObject.value.set({
       left: selectedObject.value.left + 20,
       top: selectedObject.value.top + 20,
     });
@@ -250,6 +255,9 @@ const copyShape = () => {
   }
   isContextMenuVisible.value = false; // Скрытие меню после действия
 };
+document.addEventListener('click', () => {
+  isContextMenuVisible.value = false;
+});
 </script>
 
 <style lang="css" scoped>
