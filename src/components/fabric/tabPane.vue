@@ -33,6 +33,23 @@
       height="600px"
       style="border: 1px solid rebeccapurple"
     ></canvas>
+    <teleport to="body">
+      <div
+        v-if="isContextMenuVisible"
+        :style="{
+          top: `${contextMenuPosition.y}px`,
+          left: `${contextMenuPosition.x}px`,
+        }"
+        class="context-menu"
+      >
+        <ul>
+          <li @click="changeColor">Изменить цвет</li>
+          <li @click="deleteShape">Удалить фигуру</li>
+          <li @click="copyShape">Копировать фигуру</li>
+          <!-- Другие действия -->
+        </ul>
+      </div>
+    </teleport>
     <create-figure-dialog
       :open="openDialogCreateFigure"
       @close="openDialogCreateFigure = false"
@@ -51,6 +68,9 @@ const showGrid = ref(true); // State for showing/hiding the grid
 const openDialogCreateFigure = ref(false);
 const canvas = ref(null); // Store the canvas instance
 const backgroundColor = ref('#f0f0f0');
+const selectedObject = ref('');
+const isContextMenuVisible = ref(false);
+const contextMenuPosition = ref({ x: 0, y: 0 });
 
 const drawGrid = (gridSize) => {
   // Remove old grid lines
@@ -144,7 +164,19 @@ const createFigure = (value) => {
 };
 onMounted(() => {
   canvas.value = new Canvas(canvasRef.value);
-  canvas.value.backgroundColor = backgroundColor.value; // Укажите нужный цвет фона
+  canvas.value.backgroundColor = backgroundColor.value;
+  // Обработка события нажатия на фигуру
+  canvas.value.on('mouse:dblclick', (e) => {
+    selectedObject.value = e.target; // Сохраняем выбранный объект
+    console.log(selectedObject.value);
+    // Позиция меню
+    contextMenuPosition.value = {
+      x: e.e.clientX,
+      y: e.e.clientY,
+    };
+    console.log(contextMenuPosition.value);
+    isContextMenuVisible.value = true; // Показываем меню
+  }); // Укажите нужный цвет фона
   drawGrid(widthGrid.value); // Initial grid draw
 
   // Example of adding an object to the canvas
@@ -177,6 +209,47 @@ const backgroundColorChange = () => {
 const openDialogCreate = () => {
   openDialogCreateFigure.value = true;
 };
+const changeColor = () => {
+  if (selectedObject.value) {
+    selectedObject.value.set('fill', 'orange');
+    canvas.value.requestRenderAll();
+  }
+  isContextMenuVisible.value = false; // Скрываем меню после действия
+};
+
+// Действие "Удалить фигуру"
+const deleteShape = () => {
+  if (selectedObject.value) {
+    canvas.value.remove(selectedObject.value);
+    selectedObject.value = null;
+  }
+  isContextMenuVisible.value = false; // Скрываем меню после действия
+};
+// Действие "Копировать фигуру"
+const copyShape = () => {
+  if (selectedObject.value) {
+    const clonedProps = selectedObject.value.toObject(); // Получение параметров объекта
+
+    let cloned;
+    if (selectedObject.value.type === 'rect') {
+      cloned = new Rect(clonedProps);
+    } else if (selectedObject.value.type === 'circle') {
+      cloned = new Circle(clonedProps);
+    } else if (selectedObject.value.type === 'triangle') {
+      cloned = new Triangle(clonedProps);
+    }
+
+    // Смещение копии относительно оригинала
+    cloned.set({
+      left: selectedObject.value.left + 20,
+      top: selectedObject.value.top + 20,
+    });
+
+    canvas.value.add(cloned); // Добавление клонированного объекта на канвас
+    canvas.value.requestRenderAll();
+  }
+  isContextMenuVisible.value = false; // Скрытие меню после действия
+};
 </script>
 
 <style lang="css" scoped>
@@ -196,9 +269,35 @@ const openDialogCreate = () => {
   margin-left: 0;
 }
 .tab-pane {
+  position: relative;
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: space-around;
+}
+.context-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 5px 0;
+  z-index: 10;
+}
+
+.context-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.context-menu ul li {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.context-menu ul li:hover {
+  background-color: #eee;
 }
 </style>

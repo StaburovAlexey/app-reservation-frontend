@@ -55,6 +55,10 @@ const props = defineProps({
     default: false,
     required: true,
   },
+  selectObject: {
+    type: Object,
+    default: null,
+  },
 });
 const emits = defineEmits(['close', 'save']);
 
@@ -78,6 +82,17 @@ watch(
       await nextTick(); // Ensure the DOM updates before initializing the canvas
       initFabric(); // Initialize the canvas
     }
+  },
+);
+watch(
+  () => props.selectObject,
+  (newValue) => {
+    form.value = {
+      ...newValue,
+      color: newValue.fill,
+    };
+
+    console.log(form.value);
   },
 );
 
