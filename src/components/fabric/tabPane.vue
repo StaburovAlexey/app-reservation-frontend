@@ -24,8 +24,8 @@
       <el-button type="primary">Кнопка 2</el-button>
       <el-button type="primary">Кнопка 3</el-button>
       <el-button type="primary">Кнопка 4</el-button>
-      <el-button type="primary">Кнопка 5</el-button>
-      <el-button type="warning">Сохранить</el-button>
+      <el-button type="primary" @click="loadJson">Загрузить</el-button>
+      <el-button type="warning" @click="saveJson">Сохранить</el-button>
     </div>
     <canvas
       ref="canvasRef"
@@ -71,7 +71,7 @@ const backgroundColor = ref('#f0f0f0');
 const selectedObject = ref('');
 const isContextMenuVisible = ref(false);
 const contextMenuPosition = ref({ x: 0, y: 0 });
-
+const json = ref({});
 const drawGrid = (gridSize) => {
   // Remove old grid lines
   const gridLines = canvas.value
@@ -258,6 +258,21 @@ const copyShape = () => {
 document.addEventListener('click', () => {
   isContextMenuVisible.value = false;
 });
+
+const saveJson = () => {
+
+  const canvasData = canvas.value.toJSON();
+  json.value = JSON.stringify(canvasData);
+ 
+};
+const loadJson = () => {
+  const canvasData = JSON.parse(json.value);
+  canvas.value.loadFromJSON(canvasData, () => {
+    // Обновление рендеринга после загрузки данных
+    canvas.value.renderAll();
+    canvas.value.requestRenderAll();
+  });
+};
 </script>
 
 <style lang="css" scoped>
