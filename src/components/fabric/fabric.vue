@@ -7,7 +7,12 @@
       editable
       @edit="handleTabsEdit"
     >
-      <el-tab-pane v-for="item in list" :key="item.name" :label="item.name">
+      <el-tab-pane
+        v-for="item in list"
+        :key="item.name"
+        :label="item.name"
+        :name="item.name"
+      >
         <tab-pane :schema="item"></tab-pane>
       </el-tab-pane>
     </el-tabs>
@@ -22,6 +27,9 @@ const list = ref({});
 onMounted(async () => {
   list.value = await getSchemas();
 });
+const handleTabsEdit = (targetName, action) => {
+  console.log(action);
+};
 </script>
 
 <style lang="css" scoped>
