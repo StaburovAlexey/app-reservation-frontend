@@ -163,3 +163,80 @@ export const editUser = async (user) => {
     throw error;
   }
 };
+
+// Функция для получения всех схем
+export const getSchemas = async () => {
+  try {
+    const response = await apiClient.get('/schemas');
+    return response.data;
+  } catch (error) {
+    ElNotification({
+      title: 'Ошибка!',
+      message: error.response?.data.message || 'Не удалось получить схемы',
+      type: 'error',
+    });
+    throw error;
+  }
+};
+
+// Функция для создания новой схемы
+export const createSchema = async (name, json) => {
+  try {
+    const response = await apiClient.post('/schemas', { name, json });
+    ElNotification({
+      title: 'Успешно!',
+      message: 'Схема создана',
+      type: 'success',
+    });
+    return response.data;
+  } catch (error) {
+    ElNotification({
+      title: 'Ошибка!',
+      message: error.response?.data.message || 'Не удалось создать схему',
+      type: 'error',
+    });
+    throw error;
+  }
+};
+
+// Функция для редактирования схемы
+export const editSchema = async (name, newJson) => {
+  try {
+    const response = await apiClient.put('/schemas', { name, newJson });
+    ElNotification({
+      title: 'Успешно!',
+      message: 'Схема обновлена',
+      type: 'success',
+    });
+    return response.data;
+  } catch (error) {
+    ElNotification({
+      title: 'Ошибка!',
+      message: error.response?.data.message || 'Не удалось обновить схему',
+      type: 'error',
+    });
+    throw error;
+  }
+};
+
+// Функция для удаления схемы
+export const deleteSchema = async (name) => {
+  try {
+    const response = await apiClient.delete('/schemas', {
+      data: { name },
+    });
+    ElNotification({
+      title: 'Успешно!',
+      message: 'Схема удалена',
+      type: 'success',
+    });
+    return response.data;
+  } catch (error) {
+    ElNotification({
+      title: 'Ошибка!',
+      message: error.response?.data.message || 'Не удалось удалить схему',
+      type: 'error',
+    });
+    throw error;
+  }
+};
