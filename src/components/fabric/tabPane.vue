@@ -62,9 +62,10 @@
 import { ref, onMounted, watch } from 'vue';
 import { Canvas, Rect, Circle, Triangle, Text, Line, Group } from 'fabric';
 import CreateFigureDialog from '../dialog/CreateFigureDialog.vue';
+import { getSchemas, createSchema } from '@/api/index.js';
 const canvasRef = ref(null);
 const widthGrid = ref(30);
-const showGrid = ref(true); // State for showing/hiding the grid
+const showGrid = ref(false); // State for showing/hiding the grid
 const openDialogCreateFigure = ref(false);
 const canvas = ref(null); // Store the canvas instance
 const backgroundColor = ref('#f0f0f0');
@@ -72,6 +73,7 @@ const selectedObject = ref('');
 const isContextMenuVisible = ref(false);
 const contextMenuPosition = ref({ x: 0, y: 0 });
 const json = ref({});
+const props = defineProps(['schema']);
 const drawGrid = (gridSize) => {
   // Remove old grid lines
   const gridLines = canvas.value
@@ -178,24 +180,7 @@ onMounted(() => {
     isContextMenuVisible.value = true; // Показываем меню
   }); // Укажите нужный цвет фона
   drawGrid(widthGrid.value); // Initial grid draw
-
-  // Example of adding an object to the canvas
-  const rect = new Rect({
-    left: 100,
-    top: 100,
-    fill: 'blue',
-    width: 110,
-    height: 110,
-  });
-  const rect2 = new Rect({
-    left: 0,
-    top: 0,
-    fill: 'blue',
-    width: 50,
-    height: 50,
-  });
-  canvas.value.add(rect);
-  canvas.value.add(rect2);
+  loadJson(props.schema.json);
 });
 
 watch([widthGrid, showGrid], () => {
@@ -260,13 +245,12 @@ document.addEventListener('click', () => {
 });
 
 const saveJson = () => {
-
   const canvasData = canvas.value.toJSON();
   json.value = JSON.stringify(canvasData);
- 
+  createSchema('Зал 3', json.value);
 };
-const loadJson = () => {
-  const canvasData = JSON.parse(json.value);
+const loadJson = (json) => {
+  const canvasData = JSON.parse(json);
   canvas.value.loadFromJSON(canvasData, () => {
     // Обновление рендеринга после загрузки данных
     canvas.value.renderAll();

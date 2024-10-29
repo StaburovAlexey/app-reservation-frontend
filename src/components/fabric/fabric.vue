@@ -7,15 +7,21 @@
       editable
       @edit="handleTabsEdit"
     >
-      <el-tab-pane label="Зал №1">
-        <tab-pane></tab-pane>
+      <el-tab-pane v-for="item in list" :key="item.name" :label="item.name">
+        <tab-pane :schema="item"></tab-pane>
       </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 
 <script setup>
+import { getSchemas } from '@/api/index.js';
 import tabPane from './tabPane.vue';
+import { ref, onMounted } from 'vue';
+const list = ref({});
+onMounted(async () => {
+  list.value = await getSchemas();
+});
 </script>
 
 <style lang="css" scoped>
