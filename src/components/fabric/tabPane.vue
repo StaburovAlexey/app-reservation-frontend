@@ -61,6 +61,7 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import { Canvas, Rect, Circle, Triangle, Text, Line, Group } from 'fabric';
+
 import CreateFigureDialog from '../dialog/CreateFigureDialog.vue';
 import { getSchemas, createSchema } from '@/api/index.js';
 const canvasRef = ref(null);
@@ -180,7 +181,9 @@ onMounted(() => {
     isContextMenuVisible.value = true; // Показываем меню
   }); // Укажите нужный цвет фона
   drawGrid(widthGrid.value); // Initial grid draw
-  loadJson(props.schema.json);
+  if (props.schema.json) {
+    loadJson(props.schema.json);
+  }
 });
 
 watch([widthGrid, showGrid], () => {
@@ -244,18 +247,32 @@ document.addEventListener('click', () => {
   isContextMenuVisible.value = false;
 });
 
+const allObject = () => {
+  const allObjects = canvas.value.getObjects();
+  const initialPositions = allObjects.map((obj) => ({
+    left: obj.left,
+    top: obj.top,
+  }));
+  const activeSelection = new fabric.ActiveSelection(allObjects, {
+    canvas: canvas.value,
+  });
+  canvas.value.setActiveObject(activeSelection);
+  canvas.value.discardActiveObject();
+  canvas.value.requestRenderAll();
+};
 const saveJson = () => {
   const canvasData = canvas.value.toJSON();
   json.value = JSON.stringify(canvasData);
   createSchema('Зал 3', json.value);
 };
-const loadJson = (json) => {
+const loadJson = async (json) => {
   const canvasData = JSON.parse(json);
-  canvas.value.loadFromJSON(canvasData, () => {
+  await canvas.value.loadFromJSON(canvasData, () => {
     // Обновление рендеринга после загрузки данных
     canvas.value.renderAll();
     canvas.value.requestRenderAll();
   });
+  // allObject();
 };
 </script>
 

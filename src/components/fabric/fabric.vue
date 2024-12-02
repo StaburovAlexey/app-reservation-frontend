@@ -23,12 +23,23 @@
 import { getSchemas } from '@/api/index.js';
 import tabPane from './tabPane.vue';
 import { ref, onMounted } from 'vue';
-const list = ref({});
+const list = ref([]);
 onMounted(async () => {
   list.value = await getSchemas();
 });
 const handleTabsEdit = (targetName, action) => {
-  console.log(action);
+  switch (action) {
+    case 'add':
+      list.value.push({
+        name: 'Новое поле',
+        json: '',
+      });
+      console.log(list.value);
+      break;
+    case 'remove':
+      break;
+    default:
+  }
 };
 </script>
 
