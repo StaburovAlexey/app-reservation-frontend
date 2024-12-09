@@ -240,3 +240,54 @@ export const deleteSchema = async (_id) => {
     throw error;
   }
 };
+// Функция для бота
+export const getBotApi = async () => {
+  try {
+    const response = await apiClient.get('/bot');
+    return response.data;
+  } catch (error) {
+    ElNotification({
+      title: 'Ошибка!',
+      message: error.response?.data.message || 'Не удалось получить API',
+      type: 'error',
+    });
+    throw error;
+  }
+};
+export const editApiBot = async (_id, api) => {
+  try {
+    const response = await apiClient.put('/bot', { _id, api });
+    ElNotification({
+      title: 'Успешно!',
+      message: 'API обновлена',
+      type: 'success',
+    });
+    return response.data;
+  } catch (error) {
+    ElNotification({
+      title: 'Ошибка!',
+      message: error.response?.data.message || 'Не удалось обновить API',
+      type: 'error',
+    });
+    throw error;
+  }
+};
+// Функция для создания новой схемы
+export const createApiBot = async (api) => {
+  try {
+    const response = await apiClient.post('/bot', { api });
+    ElNotification({
+      title: 'Успешно!',
+      message: 'Api добавлена',
+      type: 'success',
+    });
+    return response.data;
+  } catch (error) {
+    ElNotification({
+      title: 'Ошибка!',
+      message: error.response?.data.message || 'Не удалось обновить API',
+      type: 'error',
+    });
+    throw error;
+  }
+};

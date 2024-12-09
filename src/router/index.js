@@ -84,6 +84,17 @@ const routes = [
           icon: 'Calendar',
         },
       },
+      {
+        path: '/admin/telegram-bot',
+        component: () => import('@/views/telegramBot/TelegramBot.vue'),
+        name: 'telegramBot',
+        meta: {
+          title: 'Настройка бота',
+          requiresAuth: true,
+          role: ['admin'],
+          icon: 'Service',
+        },
+      },
     ],
   },
   {
