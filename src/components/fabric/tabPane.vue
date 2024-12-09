@@ -1,6 +1,8 @@
 <template>
   <div class="tab-pane">
     <div class="menu-canvas">
+      <label>Имя схемы</label>
+      <el-input v-model="nameSchema"></el-input>
       <div>
         <span>Ширина сетки</span>
         <el-slider
@@ -11,6 +13,7 @@
           size="small"
         />
       </div>
+
       <el-checkbox v-model="showGrid">Показать сетку</el-checkbox>
       <el-button @click="openDialogCreate" type="primary">
         Создать фигуру
@@ -63,8 +66,9 @@ import { ref, onMounted, watch } from 'vue';
 import { Canvas, Rect, Circle, Triangle, Text, Line, Group } from 'fabric';
 
 import CreateFigureDialog from '../dialog/CreateFigureDialog.vue';
-import { getSchemas, createSchema } from '@/api/index.js';
+import { createSchema, editSchema } from '@/api/index.js';
 const canvasRef = ref(null);
+const nameSchema = ref('');
 const widthGrid = ref(30);
 const showGrid = ref(false); // State for showing/hiding the grid
 const openDialogCreateFigure = ref(false);
@@ -75,6 +79,7 @@ const isContextMenuVisible = ref(false);
 const contextMenuPosition = ref({ x: 0, y: 0 });
 const json = ref({});
 const props = defineProps(['schema']);
+const emits = defineEmits(['update']);
 const drawGrid = (gridSize) => {
   // Remove old grid lines
   const gridLines = canvas.value
@@ -177,13 +182,14 @@ onMounted(() => {
       x: e.e.clientX,
       y: e.e.clientY,
     };
-    console.log(contextMenuPosition.value);
+
     isContextMenuVisible.value = true; // Показываем меню
   }); // Укажите нужный цвет фона
   drawGrid(widthGrid.value); // Initial grid draw
   if (props.schema.json) {
     loadJson(props.schema.json);
   }
+  nameSchema.value = props.schema.name;
 });
 
 watch([widthGrid, showGrid], () => {
@@ -261,9 +267,18 @@ const allObject = () => {
   canvas.value.requestRenderAll();
 };
 const saveJson = () => {
-  const canvasData = canvas.value.toJSON();
-  json.value = JSON.stringify(canvasData);
-  createSchema('Зал 3', json.value);
+  if (props.schema._id) {
+    editJson().then((res) => {
+      emits('update');
+    });
+  } else {
+    showGrid.value = false;
+    const canvasData = canvas.value.toJSON();
+    json.value = JSON.stringify(canvasData);
+    createSchema(nameSchema.value, json.value).then((res) => {
+      emits('update');
+    });
+  }
 };
 const loadJson = async (json) => {
   const canvasData = JSON.parse(json);
@@ -273,6 +288,12 @@ const loadJson = async (json) => {
     canvas.value.requestRenderAll();
   });
   // allObject();
+};
+const editJson = () => {
+  showGrid.value = false;
+  const canvasData = canvas.value.toJSON();
+  json.value = JSON.stringify(canvasData);
+  editSchema(props.schema._id, nameSchema.value, json.value);
 };
 </script>
 

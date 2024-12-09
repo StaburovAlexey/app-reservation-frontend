@@ -5,27 +5,34 @@
       class="tabs"
       tab-position="left"
       editable
+      v-model="activeName"
       @edit="handleTabsEdit"
+      @tab-click="handleClick"
     >
       <el-tab-pane
         v-for="item in list"
-        :key="item.name"
+        :key="item._id"
         :label="item.name"
         :name="item.name"
       >
-        <tab-pane :schema="item"></tab-pane>
+        <tab-pane :schema="item" @update="getList()"></tab-pane>
       </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 
 <script setup>
-import { getSchemas } from '@/api/index.js';
+import { getSchemas, deleteSchema } from '@/api/index.js';
 import tabPane from './tabPane.vue';
 import { ref, onMounted } from 'vue';
 const list = ref([]);
-onMounted(async () => {
+const activeName = ref('')
+const getList = async () => {
   list.value = await getSchemas();
+};
+onMounted(async () => {
+  await getList();
+  activeName.value = list.value[0]?.name || ''
 });
 const handleTabsEdit = (targetName, action) => {
   switch (action) {
@@ -37,10 +44,22 @@ const handleTabsEdit = (targetName, action) => {
       console.log(list.value);
       break;
     case 'remove':
+      delTab(targetName);
       break;
     default:
   }
 };
+
+const delTab = async (name) => {
+  const item = list.value.find((item) => item.name === name);
+  await deleteSchema(item._id).then(() => {
+    getList();
+  });
+};
+
+const handleClick= (tab, event) => {
+  console.log(tab)
+}
 </script>
 
 <style lang="css" scoped>

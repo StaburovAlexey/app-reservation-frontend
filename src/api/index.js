@@ -200,9 +200,9 @@ export const createSchema = async (name, json) => {
 };
 
 // Функция для редактирования схемы
-export const editSchema = async (name, newJson) => {
+export const editSchema = async (_id, name, newJson) => {
   try {
-    const response = await apiClient.put('/schemas', { name, newJson });
+    const response = await apiClient.put('/schemas', { _id, name, newJson });
     ElNotification({
       title: 'Успешно!',
       message: 'Схема обновлена',
@@ -220,10 +220,10 @@ export const editSchema = async (name, newJson) => {
 };
 
 // Функция для удаления схемы
-export const deleteSchema = async (name) => {
+export const deleteSchema = async (_id) => {
   try {
     const response = await apiClient.delete('/schemas', {
-      data: { name },
+      data: { _id },
     });
     ElNotification({
       title: 'Успешно!',
