@@ -35,6 +35,9 @@
         <el-form-item label="Имя и фамилия" prop="name">
           <el-input v-model="form.name" clearable />
         </el-form-item>
+        <el-form-item label="ID Телеграмм" prop="tg">
+          <el-input v-model="form.tg" clearable />
+        </el-form-item>
       </el-form>
     </template>
   </CustomDialog>
@@ -62,6 +65,7 @@ const form = ref({
   password: '',
   role: '',
   name: '',
+  tg: '',
 });
 const refForm = ref(null);
 const loading = ref(false);

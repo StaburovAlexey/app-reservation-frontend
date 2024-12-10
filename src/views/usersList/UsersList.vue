@@ -1,5 +1,5 @@
 <template>
-  <CustomCard>
+  <CustomCard title="Список пользователей">
     <template #body>
       <el-table
         :data="tableData"
@@ -10,11 +10,13 @@
           <template #default="props">
             <div m="6">
               <p m="t-0 b-2">Имя: {{ props.row.name }}</p>
+              <p m="t-0 b-2">Почта: {{ props.row.login }}</p>
               <p m="t-0 b-2">Пароль: {{ props.row.password }}</p>
+              <p m="t-0 b-2">ID Телеграмм: {{ props.row.tg }}</p>
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="login" label="Почта" />
+        <el-table-column prop="name" label="Фио" />
         <el-table-column prop="role" label="Роль" />
         <el-table-column prop="_id" label="ID" />
         <el-table-column fixed="right" width="100">

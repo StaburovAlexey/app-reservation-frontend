@@ -1,9 +1,9 @@
 <template>
-  <custom-card :header="true">
+  <CustomCard title="Создание схемы столов" >
     <template #body>
       <fabric></fabric>
     </template>
-  </custom-card>
+  </CustomCard>
 </template>
 
 <script setup>

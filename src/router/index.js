@@ -89,7 +89,7 @@ const routes = [
         component: () => import('@/views/telegramBot/TelegramBot.vue'),
         name: 'telegramBot',
         meta: {
-          title: 'Настройка бота',
+          title: 'Настройка Telegram бота',
           requiresAuth: true,
           role: ['admin'],
           icon: 'Service',

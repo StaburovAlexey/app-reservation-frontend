@@ -254,9 +254,9 @@ export const getBotApi = async () => {
     throw error;
   }
 };
-export const editApiBot = async (_id, api) => {
+export const editApiBot = async (_id, api, idAdmin) => {
   try {
-    const response = await apiClient.put('/bot', { _id, api });
+    const response = await apiClient.put('/bot', { _id, api, idAdmin });
     ElNotification({
       title: 'Успешно!',
       message: 'API обновлена',
@@ -275,7 +275,7 @@ export const editApiBot = async (_id, api) => {
 // Функция для создания новой схемы
 export const createApiBot = async (api) => {
   try {
-    const response = await apiClient.post('/bot', { api });
+    const response = await apiClient.post('/bot', { api, idAdmin });
     ElNotification({
       title: 'Успешно!',
       message: 'Api добавлена',
