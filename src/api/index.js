@@ -273,7 +273,7 @@ export const editApiBot = async (_id, api, idAdmin) => {
   }
 };
 // Функция для создания новой схемы
-export const createApiBot = async (api) => {
+export const createApiBot = async (api, idAdmin) => {
   try {
     const response = await apiClient.post('/bot', { api, idAdmin });
     ElNotification({
