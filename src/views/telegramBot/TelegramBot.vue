@@ -3,6 +3,20 @@
     <template #body>
       <div class="card-body">
         <div class="gap-4 mb-4 iput-container">
+          <span v-if="active">Отключить Telegram бота</span>
+          <span v-else>Включить Telegram бота</span>
+          <el-switch
+            v-model="active"
+            class="ml-2"
+            style="
+              --el-switch-on-color: #13ce66;
+              --el-switch-off-color: #ff4949;
+            "
+          />
+          <el-button type="success" @click="saveApiBot()">Сохранить</el-button>
+        </div>
+
+        <div class="gap-4 mb-4 iput-container" v-if="active">
           <span>
             Токен Telegram бота
             <CustomTooltip :content="info.token">
@@ -10,9 +24,9 @@
             </CustomTooltip>
           </span>
           <el-input v-model="apiBot" />
-          <el-button type="success" @click="saveApiBot()">Сохранить</el-button>
+          <!-- <el-button type="success" @click="saveApiBot()">Сохранить</el-button> -->
         </div>
-        <div class="gap-4 mb-4 iput-container">
+        <div class="gap-4 mb-4 iput-container" v-if="active">
           <span>
             Идентификатор Telegram администратора бота
             <CustomTooltip :content="info.id">
@@ -20,7 +34,7 @@
             </CustomTooltip>
           </span>
           <el-input v-model="idAdmin" />
-          <el-button type="success" @click="saveApiBot()">Сохранить</el-button>
+          <!-- <el-button type="success" @click="saveApiBot()">Сохранить</el-button> -->
         </div>
       </div>
     </template>
@@ -29,12 +43,13 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { getBotApi, createApiBot, editApiBot } from '@/api/index.js';
+import { getBotApi, editApiBot } from '@/api/index.js';
 import CustomCard from '@/components/custom-element/CustomCard.vue';
 import CustomTooltip from '@/components/custom-element/CustomTooltip.vue';
 const apiBot = ref('');
 const id = ref('');
 const idAdmin = ref('');
+const active = ref(false);
 const info = {
   token: 'Токен Telegram бота, который вы можете получить на сайте @BotFather',
   id: 'Идентификатор администратора бота. Чтобы получить идентификатор, используйте @userinfobot или команду "/id" в боте.',
@@ -46,15 +61,11 @@ const getApi = async () => {
   const res = await getBotApi();
   apiBot.value = res[0].api || '';
   idAdmin.value = res[0].idAdmin || '';
+  active.value = res[0].active || false;
   id.value = res[0]._id || null;
-  console.log(id.value);
 };
 const saveApiBot = async () => {
-  if (!id.value) {
-    await createApiBot(apiBot.value, idAdmin.value);
-  } else {
-    await editApiBot(id.value, apiBot.value, idAdmin.value);
-  }
+  await editApiBot(id.value, apiBot.value, idAdmin.value, active.value);
   await getApi();
 };
 </script>

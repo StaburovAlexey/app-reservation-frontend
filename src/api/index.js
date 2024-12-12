@@ -254,31 +254,12 @@ export const getBotApi = async () => {
     throw error;
   }
 };
-export const editApiBot = async (_id, api, idAdmin) => {
+export const editApiBot = async (_id, api, idAdmin, active) => {
   try {
-    const response = await apiClient.put('/bot', { _id, api, idAdmin });
+    const response = await apiClient.put('/bot', { _id, api, idAdmin, active });
     ElNotification({
       title: 'Успешно!',
       message: 'API обновлена',
-      type: 'success',
-    });
-    return response.data;
-  } catch (error) {
-    ElNotification({
-      title: 'Ошибка!',
-      message: error.response?.data.message || 'Не удалось обновить API',
-      type: 'error',
-    });
-    throw error;
-  }
-};
-// Функция для создания новой схемы
-export const createApiBot = async (api, idAdmin) => {
-  try {
-    const response = await apiClient.post('/bot', { api, idAdmin });
-    ElNotification({
-      title: 'Успешно!',
-      message: 'Api добавлена',
       type: 'success',
     });
     return response.data;
