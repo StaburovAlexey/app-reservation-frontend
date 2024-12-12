@@ -1,5 +1,5 @@
 <template>
-  <CustomCard title="Создание схемы столов" >
+  <CustomCard title="Создание схемы столов">
     <template #body>
       <fabric></fabric>
     </template>

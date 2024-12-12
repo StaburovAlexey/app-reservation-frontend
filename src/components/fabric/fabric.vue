@@ -26,13 +26,13 @@ import { getSchemas, deleteSchema } from '@/api/index.js';
 import tabPane from './tabPane.vue';
 import { ref, onMounted } from 'vue';
 const list = ref([]);
-const activeName = ref('')
+const activeName = ref('');
 const getList = async () => {
   list.value = await getSchemas();
 };
 onMounted(async () => {
   await getList();
-  activeName.value = list.value[0]?.name || ''
+  activeName.value = list.value[0]?.name || '';
 });
 const handleTabsEdit = (targetName, action) => {
   switch (action) {
@@ -57,9 +57,9 @@ const delTab = async (name) => {
   });
 };
 
-const handleClick= (tab, event) => {
-  console.log(tab)
-}
+const handleClick = (tab, event) => {
+  console.log(tab);
+};
 </script>
 
 <style lang="css" scoped>

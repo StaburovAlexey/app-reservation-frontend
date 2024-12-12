@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { router } from '@/router';
 import { ElNotification } from 'element-plus';
+const baseURL = import.meta.env.VITE_APP_BASE_URL
 // Создаем экземпляр Axios с общими настройками
 const apiClient = axios.create({
-  baseURL: 'http://localhost:3000', // Базовый URL для запросов
+  baseURL: baseURL, // Базовый URL для запросов
   withCredentials: true, // Позволяет отправлять куки
   headers: {
     'Content-Type': 'application/json',

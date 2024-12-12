@@ -10,6 +10,8 @@ import ElementPlus from 'element-plus';
 import App from './App.vue';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue';
 import { ElNotification } from 'element-plus';
+console.log('~~Запускается сборка:', import.meta.env.MODE);
+console.log('~~Сервер базы данных~~', import.meta.env.VITE_APP_BASE_URL);
 
 const pinia = createPinia();
 
