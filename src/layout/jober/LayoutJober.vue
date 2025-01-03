@@ -19,6 +19,7 @@
       </template>
       <SideBar :isJober="true"></SideBar>
     </el-drawer>
+    <Main :openSidebar></Main>
   </div>
 </template>
 
@@ -26,11 +27,13 @@
 import { reactive, ref } from 'vue';
 import Header from '@/layout/component/Header.vue';
 import SideBar from '@/layout/component/SideBar.vue';
+import Main from '@/layout/component/Main.vue';
 import { useUserStore } from '@/stores/userStore.js';
 export default {
   components: {
     Header,
     SideBar,
+    Main
   },
   setup() {
     const drawer = ref(false);

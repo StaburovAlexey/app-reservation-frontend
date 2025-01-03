@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="1.1"
+  width="320"
+  height="600"
+  viewBox="0 0 320 600"
+  xml:space="preserve"
+>
+  <desc>Created with Fabric.js 6.4.2</desc>
+  <defs></defs>
+  <rect x="0" y="0" width="100%" height="100%" fill="#f0f0f0" />
+  <g transform="matrix(1 0 0 1 101.3385 96.4302)">
+    <g style="">
+      <g transform="matrix(1 0 0 1 0 0)">
+        <rect
+          style="
+            stroke: none;
+            stroke-width: 1;
+            stroke-dasharray: none;
+            stroke-linecap: butt;
+            stroke-dashoffset: 0;
+            stroke-linejoin: miter;
+            stroke-miterlimit: 4;
+            fill: rgb(0, 0, 255);
+            fill-rule: nonzero;
+            opacity: 1;
+          "
+          x="-65"
+          y="-65"
+          rx="0"
+          ry="0"
+          width="130"
+          height="130"
+          id="figure-1"
+        />
+      </g>
+      <g transform="matrix(1 0 0 1 -0.5 -0.5)" style="">
+        <text
+          xml:space="preserve"
+          font-family="Times New Roman"
+          font-size="36"
+          font-style="normal"
+          font-weight="normal"
+          style="
+            stroke: none;
+            stroke-width: 1;
+            stroke-dasharray: none;
+            stroke-linecap: butt;
+            stroke-dashoffset: 0;
+            stroke-linejoin: miter;
+            stroke-miterlimit: 4;
+            fill: rgb(255, 255, 255);
+            fill-rule: nonzero;
+            opacity: 1;
+            white-space: pre;
+          "
+        >
+          <tspan x="-9" y="11.309">1</tspan>
+        </text>
+      </g>
+    </g>
+  </g>
+  <g transform="matrix(1 0 0 1 220.5932 275.8322)">
+    <g style="">
+      <g transform="matrix(1 0 0 1 0 0)">
+        <circle
+          style="
+            stroke: none;
+            stroke-width: 1;
+            stroke-dasharray: none;
+            stroke-linecap: butt;
+            stroke-dashoffset: 0;
+            stroke-linejoin: miter;
+            stroke-miterlimit: 4;
+            fill: rgb(225, 8, 8);
+            fill-rule: nonzero;
+            opacity: 1;
+          "
+          cx="0"
+          cy="0"
+          r="65"
+          id="figure-2"
+        />
+      </g>
+      <g transform="matrix(1 0 0 1 -0.5 -0.5)" style="">
+        <text
+          xml:space="preserve"
+          font-family="Times New Roman"
+          font-size="36"
+          font-style="normal"
+          font-weight="normal"
+          style="
+            stroke: none;
+            stroke-width: 1;
+            stroke-dasharray: none;
+            stroke-linecap: butt;
+            stroke-dashoffset: 0;
+            stroke-linejoin: miter;
+            stroke-miterlimit: 4;
+            fill: rgb(255, 255, 255);
+            fill-rule: nonzero;
+            opacity: 1;
+            white-space: pre;
+          "
+        >
+          <tspan x="-9" y="11.309">2</tspan>
+        </text>
+      </g>
+    </g>
+  </g>
+  <g transform="matrix(1 0 0 1 93.3882 402.4103)">
+    <g style="">
+      <g transform="matrix(1 0 0 1 0 0)">
+        <polygon
+          style="
+            stroke: none;
+            stroke-width: 1;
+            stroke-dasharray: none;
+            stroke-linecap: butt;
+            stroke-dashoffset: 0;
+            stroke-linejoin: miter;
+            stroke-miterlimit: 4;
+            fill: rgb(23, 188, 53);
+            fill-rule: nonzero;
+            opacity: 1;
+          "
+          points="-65 65,0 -65,65 65"
+          id="figure-3"
+        />
+      </g>
+      <g transform="matrix(1 0 0 1 -0.5 -0.5)" style="">
+        <text
+          xml:space="preserve"
+          font-family="Times New Roman"
+          font-size="36"
+          font-style="normal"
+          font-weight="normal"
+          style="
+            stroke: none;
+            stroke-width: 1;
+            stroke-dasharray: none;
+            stroke-linecap: butt;
+            stroke-dashoffset: 0;
+            stroke-linejoin: miter;
+            stroke-miterlimit: 4;
+            fill: rgb(255, 255, 255);
+            fill-rule: nonzero;
+            opacity: 1;
+            white-space: pre;
+          "
+        >
+          <tspan x="-9" y="11.309">3</tspan>
+        </text>
+      </g>
+    </g>
+  </g>
+</svg>

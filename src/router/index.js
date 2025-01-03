@@ -109,8 +109,8 @@ const routes = [
     },
     children: [
       {
-        path: '/jober',
-        component: () => import('@/layout/jober/LayoutJober.vue'),
+        path: '/jober/reserv',
+        component: () => import('@/components/fabric/fabric.vue'),
         name: 'main-page1',
         meta: {
           title: 'Главная',

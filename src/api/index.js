@@ -5,7 +5,7 @@ const baseURL = import.meta.env.VITE_APP_BASE_URL
 // Создаем экземпляр Axios с общими настройками
 const apiClient = axios.create({
   baseURL: baseURL, // Базовый URL для запросов
-  withCredentials: true, // Позволяет отправлять куки
+  // withCredentials: true, // Позволяет отправлять куки
   headers: {
     'Content-Type': 'application/json',
   },

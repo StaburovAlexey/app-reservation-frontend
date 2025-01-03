@@ -26,7 +26,7 @@
       </el-form-item>
       <el-button type="primary">Кнопка 2</el-button>
       <el-button type="primary">Кнопка 3</el-button>
-      <el-button type="primary">Кнопка 4</el-button>
+      <el-button type="primary" @click="saveSVG">Сохранить SVG</el-button>
       <el-button type="primary" @click="loadJson">Загрузить</el-button>
       <el-button type="warning" @click="saveJson">Сохранить</el-button>
     </div>
@@ -294,6 +294,38 @@ const editJson = () => {
   const canvasData = canvas.value.toJSON();
   json.value = JSON.stringify(canvasData);
   editSchema(props.schema._id, nameSchema.value, json.value);
+};
+const saveSVG = () => {
+  const svgData = canvas.value.toSVG({});
+  const svgString = svgData; // Вставьте сюда ваш SVG
+
+  // Парсим SVG с помощью DOMParser
+  const parser = new DOMParser();
+  const svgDoc = parser.parseFromString(svgString, 'image/svg+xml');
+
+  // Находим все группы <g> с текстом
+  const groups = svgDoc.querySelectorAll('g');
+
+  // Проходимся по каждой группе <g>
+  groups.forEach((group) => {
+    const tspan = group.querySelector('tspan'); // Находим <tspan> внутри группы
+    const shape = group.querySelector('rect, circle, polygon'); // Находим фигуру внутри группы
+
+    if (tspan && shape) {
+      const text = tspan.textContent.trim(); // Извлекаем текст из <tspan>
+      shape.setAttribute('id', `figure-${text}`); // Добавляем атрибут id к фигуре
+    }
+  });
+
+  // Сериализуем модифицированный SVG обратно в строку
+  const serializer = new XMLSerializer();
+  const updatedSvgString = serializer.serializeToString(svgDoc);
+  // Если нужно сохранить как файл
+  const blob = new Blob([updatedSvgString], { type: 'image/svg+xml' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'canvas.svg';
+  link.click();
 };
 </script>
 
